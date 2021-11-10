@@ -1,0 +1,38 @@
+<div class="mt-5">
+    <form action="{{ route('app.search') }}" method="get">
+        <div class="card border-0 shadow-lg" style="padding:2rem;">
+            <div class="row justify-content-center">
+                <div class="form col-md-3">
+                    <div class="">
+                        <select class="form-select" name="category_id"  style="border-radius:2rem;"
+                            aria-label="Default select example">
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->categoryName }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form col-md-3">
+                    <div class="">
+                        <input type="text" name="location" class="form-control" style="border-radius:2rem;" id=""
+                            placeholder="location" aria-describedby="">
+                    </div>
+                </div>
+
+                <div class="form col-md-3">
+                    <div class="">
+                        <input type="number" name="budget" class="form-control" style="border-radius:2rem;" id=""
+                            placeholder="budget" aria-describedby="">
+                    </div>
+                </div>
+
+                <div class="form col-md-3">
+                    <a href="result.html"><button type="submit" class="btn btn-warning btn-round">Search
+                            it</button></a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

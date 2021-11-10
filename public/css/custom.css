@@ -1,0 +1,354 @@
+:root {
+    --bs-blue: #63b3ed;
+    --bs-indigo: #596cff;
+    --bs-purple: #6f42c1;
+    --bs-pink: #d63384;
+    --bs-red: #f56565;
+    --bs-orange: #fd7e14;
+    --bs-yellow: #fbd38d;
+    --bs-green: #81e6d9;
+    --bs-teal: #20c997;
+    --bs-cyan: #0dcaf0;
+    --bs-gray: #6c757d;
+    --bs-gray-dark: #343a40;
+    --bs-primary: #f05f3e;
+    --bs-secondary: #7f8fa6;
+    --bs-success: #18ce0f;
+    --bs-info: #2ca8ff;
+    --bs-warning: #f5a623;
+    --bs-danger: #e20000;
+    --bs-light: #dce1ea;
+    --bs-dark: #353b48;
+    --bs-white: #fff;
+    --bs-font-sans-serif: Montserrat;
+    --bs-font-monospace: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+    --bs-gradient: linear-gradient(180deg,hsla(0,0%,100%,.15),hsla(0,0%,100%,0));
+}
+
+
+body {
+    margin: 0;
+    font-family: var(--bs-font-sans-serif);
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #7f8fa6;
+    background-color: #fff;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+
+.page-header-1 {
+	height:60vh;
+	background-color:grey;
+}
+
+.page-header-text {
+	padding-top:8rem;
+	padding-bottom:3rem;
+}
+
+.h1, .h2, .h3, .h4, h1, h2, h3, h4 {
+    letter-spacing: -.07rem;
+}
+
+
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: .5rem;
+    font-weight: 400;
+    line-height: 1.2;
+    color: #344767;
+}
+
+*, :after, :before {
+    box-sizing: border-box;
+}
+
+p {
+    line-height: 1.625;
+    font-weight: 400;
+}
+.p, p {
+    font-size: 1rem;
+}
+.lead, .p, p {
+    font-weight: 400;
+}
+.p, p {
+    line-height: 1.6;
+}
+
+.lead {
+    line-height: 1.625;
+}
+.lead, .p, p {
+    font-weight: 400;
+}
+
+/*backgrounds*/
+.bg-primary {
+	background-color:#f05f3e !important;
+}
+
+.bg-secondary {
+	background-color:#7f8fa6 !important;
+}
+
+.bg-info {
+	background-color:#2ca8ff !important;
+}
+
+.bg-success {
+	background-color:#18ce0f !important;
+}
+
+.bg-danger {
+	background-color:#e20000 !important;
+}
+
+.bg-light {
+	background-color:#f5f6f9 !important;
+}
+
+.bg-dark {
+	background-color:#353b38 !important;
+}
+
+/*button*/
+
+.btn {
+    display: inline-block;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #7f8fa6;
+    text-transform: uppercase;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: .75rem 1.5rem;
+    font-size: 0.9rem;
+    border-radius: 30px;
+    -webkit-box-shadow: 5px 5px 29px -9px #00000030;
+    box-shadow: 3px 17px 20px 7px #00000030;
+    }
+
+    .btn:hover {
+    display: inline-block;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #7f8fa6;
+    text-transform: uppercase;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: .75rem 1.5rem;
+    font-size: 0.9rem;
+    border-radius: 30px;
+    transition-duration: 0.5s;
+
+    	
+    }
+
+
+/* button colors */
+
+.btn-primary {
+    color: #000 !important;
+    background-color: #f05f3e !important;
+    border-color: #f05f3e !important;
+}
+
+.btn-info {
+    color: #ffffff !important;
+    background-color: #2ca8ff !important;
+    border-color: #2ca8ff !important;
+}
+
+.btn-default {
+    color: #353b38 !important;
+    background-color: #DCE1EA !important;
+    border-color: #DCE1EA !important;
+}
+
+.btn-secondary {
+    color: #fff !important;
+    background-color: #f05f3e !important;
+    border-color: #f05f3e !important;
+}
+
+.btn-warning {
+    color: #353b38 !important;
+    background-color: #F5A623 !important;
+    border-color: #F5A623 !important;
+}
+
+.btn-success {
+    color: #000 !important;
+    background-color: #18CE0F !important;
+    border-color: #18CE0F !important;
+}
+
+.btn-white {
+    color: #353b38 !important;
+    background-color: #ffffff !important;
+    border-color: #ffffff !important;
+}
+/* form control */
+.form-control {
+    display: block;
+    width: 100%;
+    padding: .5rem 1rem;
+    font-size: .875rem;
+    font-weight: 400;
+    line-height: 1.4rem;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #dedede;
+    appearance: none;
+    border-radius: 30px;
+    transition: box-shadow .15s ease,border-color .15s ease;
+}
+
+/*navbar */
+.navbar .nav-link, .navbar .navbar-brand {
+    color: #353b48;
+    font-size: .875rem;
+}
+.navbar-light .navbar-brand, .navbar-light .navbar-brand:focus, .navbar-light .navbar-brand:hover {
+    color: rgba(53,59,72,.9);
+}
+.navbar-light .navbar-brand {
+    color: rgba(0,0,0,.9);
+}
+.navbar-brand {
+    padding-top: .40625rem;
+    padding-bottom: .40625rem;
+    margin-right: 1rem;
+    font-size: 1.125rem;
+    white-space: nowrap;
+}
+.navbar-brand {
+    padding-top: .3125rem;
+    padding-bottom: .3125rem;
+    margin-right: 1rem;
+    font-size: 1.25rem;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+a {
+    letter-spacing: 0;
+    color: #353b48;
+}
+
+
+/* youtube iframe */
+.video-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
+}
+
+/* Then style the iframe to fit in the container div with full height and width */
+.responsive-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+/* accordion */
+.accordion-item:first-of-type, .accordion-item:first-of-type .accordion-button {
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+}
+.mb-3 {
+    margin-bottom: 1rem!important;
+}
+.accordion-item {
+    background-color: transparent;
+    border: 0 solid rgba(0,0,0,.125);
+}
+
+.accordion-header {
+    margin-bottom: 0;
+}
+
+.accordion-item:first-of-type, .accordion-item:first-of-type .accordion-button {
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+}
+.accordion .accordion-button {
+    font-size: inherit!important;
+}
+
+[type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
+    cursor: pointer;
+}
+
+.accordion-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    color: #7f8fa6;
+    text-align: left;
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
+    overflow-anchor: none;
+    transition: all .15s ease-in,border-radius .15s ease;
+}
+
+.input-group, .input-group .input-group-text {
+    transition: box-shadow .15s ease,border-color .15s ease;
+}
+.input-group {
+    border-radius: 30px;
+}
+.input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+}
+
+.input-group.has-validation>.dropdown-toggle:nth-last-child(n+4), .input-group.has-validation>:nth-last-child(n+3):not(.dropdown-toggle):not(.dropdown-menu), .input-group:not(.has-validation)>.dropdown-toggle:nth-last-child(n+3), .input-group:not(.has-validation)>:not(:last-child):not(.dropdown-toggle):not(.dropdown-menu) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.input-group, .input-group .input-group-text {
+    transition: box-shadow .15s ease,border-color .15s ease;
+}
+.input-group-text {
+    display: flex;
+    align-items: center;
+    padding: .5rem 1rem;
+    font-size: .875rem;
+    font-weight: 400;
+    line-height: 1.4rem;
+    color: #353b48;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #fff;
+    border: 1px solid #dedede;
+    border-radius: 30px;
+}
