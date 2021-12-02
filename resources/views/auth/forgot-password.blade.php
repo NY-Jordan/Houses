@@ -51,7 +51,7 @@
                 <div class="row justify-content-center">
                     <div class="col-12">
                         <div class="text-center text-md-center mb-5 mt-md-0 text-white">
-                            <h1 class="mb-0 h3">Sign up to our platform</h1>
+                            <h1 class="mb-0 h3">Reset Your password</h1>
                         </div>
                     </div>
                     <div class="col-12 d-flex align-items-center justify-content-center">

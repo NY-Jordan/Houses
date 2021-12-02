@@ -25,8 +25,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('account/property/edit/{id}/submit', [AccountController::class, 'edit'])->name('property.edit.submit');
     Route::post('account/property/{id}/delete', [AccountController::class, 'delete'])->name('property.delete');
     Route::get('account/search', [AccountController::class, 'search'])->name('account.search');
-    
-
+    Route::get('/account/profile', [AccountController::class, 'profile'])->name('account.profile');
+    Route::get('/account/payement', [AccountController::class, 'payement'])->name('account.payement');
+    Route::post('/update-profile', [AccountController::class,  'profile_update'])->name('profile.update');
 });
 Route::get('/property/{id}/details', [AccountController::class, 'details'])->name('property.details');
 Route::get('/result', [AppController::class, 'result'])->name('result');

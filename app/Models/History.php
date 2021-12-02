@@ -15,7 +15,7 @@ class History extends Model
     }
     public function post()
     {
-        return $this->belongsTo(History::class);
+        return $this->belongsTo(Post::class);
     }
     
 }

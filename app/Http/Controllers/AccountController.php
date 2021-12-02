@@ -8,13 +8,16 @@ use App\Models\Image;
 use App\Models\Cities;
 use App\Models\History;
 use App\Models\Categories;
+use App\Models\Image_user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AccountController extends Controller
 {
     public function account(Request $request)
     {
+        $image_user = Image_user::where('user_id', Auth::user()->id)->first();
         $posts =  Post::posts_by_user()->get();
         $number = count($posts);
         $categories = Categories::getall();
@@ -48,40 +51,114 @@ class AccountController extends Controller
             'posts' => $number,
             'inquiries' => $inquiries,
             'times' => $times,
-            'categories' => $number_of_category
+            'categories' => $number_of_category,
+            'image_user' =>$image_user
         ]);
     }
     public function listed()
     {
+        $image_user = Image_user::where('id', Auth::user()->id)->first();
         $res = Post::posts_by_user();
         $posts = $this->paginate($res, 6);
         return view('account/listed', [
-            'posts' => $posts
+            'posts' => $posts,
+            'image_user' => $image_user
         ]);
     }
     public function consulted()
     {
 
         $historyId = [];
-        $histories = History::where('user_id', Auth::user()->id)->get();
-
-        foreach ($histories as  $item) {
-            if (in_array($item->post_id, $historyId)) {
-                
-            } else {
-                $historyId[] = $item->post_id;
-            }
-        }
-        if (!empty($historyId)) {
-            $res = Post::where('id', $historyId[0]);
-            for ($i=1; $i < count($historyId) ; $i++) {
-                $a = $res->orWhere('id', $historyId[$i]);
-            }
-
-            $posts = $this->paginate($a, 8);
-        }
+        $posts = null;
+        $histories = History::where('user_id', Auth::user()->id);
+        $image_user = Image_user::where('id', Auth::user()->id)->first();
+        
+        $histories = $this->paginate($histories, 8);
 
         return view('account/consulted', [
+            'histories' => $histories,
+            'image_user' => $image_user
+        ]);
+    }
+    public function profile()
+    {
+        $image_user = Image_user::where('id', Auth::user()->id)->first();
+        return view('account/profile', [
+            'user' => Auth::user(),
+            'image_user' => $image_user
+        ]);
+    }
+    public function profile_update(Request $request)
+    {
+        //update personal information
+        $request->user()->name  = $request->name ?? $request->user()->name;
+        $request->user()->email  = $request->email ?? $request->user()->email;     
+        
+
+        //upload image profile
+        if ($request->image_user) {
+                $filename = 'image'.$request->user()->name;
+                if (Storage::exists('/ImageUser/'.$request->user()->name.'/'.$filename)) {
+                    Storage::delete('/ImageUser/'.$filename);
+                    $old_image = Image_user::where('user_id', $request->user()->id);
+                    $old_image->delete();
+                    $path = $request->file("image_user")->storeAs(
+                        'ImageUser/'.$request->user()->name, 
+                        $filename,
+                        'public'
+                    );
+                    $image = new Image_user();
+                    $image->path =  $path;
+                    $image->user_id = $request->user()->id;
+                    $image->save();                     
+                }  else {
+                    $path = $request->file("image_user")->storeAs(
+                        'ImageUser/'.$request->user()->name, 
+                        $filename,
+                        'public'
+                    );
+                    $image = new Image_user();
+                    $image->path =  $path;
+                    $image->user_id = $request->user()->id;
+                    $image->save(); 
+                }
+                
+                
+            
+        }
+
+
+        // change password
+        if ($request->old_password || $request->new_password || $request->confirm_password) {
+            $request->validate([
+                'old_password' => 'required',
+                'new_password' => 'required',
+                'confirm_password' => 'required'
+            ]);
+            if ($request->new_password === $request->confirm_password) {
+                if (password_verify($request->password, $request->user()->password)) {
+                    $request->user()->password = $request->password;
+                    $request->user()->save();
+                    return back()->with('message', 'your profile has been successfully modified');
+                } else {
+                    return back()->with('message', 'the old password it is not correct');
+                }
+            } else {
+                return back()->with('message', 'confirm password it is not correct');
+            }
+            
+            
+        }
+        $request->user()->save();
+        return back()->with('message', 'your profile has been successfully modified');
+    }
+    public function payement()
+    { 
+        
+        $posts = null;
+        $image_user = Image_user::where('id', Auth::user()->id)->first();
+        return view('account/payement', [
+            'image_user' => $image_user,
             'posts' => $posts
         ]);
     }
@@ -149,7 +226,7 @@ class AccountController extends Controller
         if (Auth::check()) {
             $name = Auth::user()->name;
             $history = History::where('user_id', Auth::user()->id)->where('post_id', $id)->get();
-            if (!isset($history[0])) {
+            if (!$history[0]) {
                 $history_user = new History();
                 $history_user->user_id  =  Auth::user()->id;
                 $history_user->post_id = $id;
@@ -181,7 +258,6 @@ class AccountController extends Controller
             ]);
         } else {
             $post = Post::where('id', $id)->first();
-
             $post->name = $request->name ?? $post->name;
             $post->description = $request->description ?? $post->description;
             $post->email = $request->email ?? $post->email;

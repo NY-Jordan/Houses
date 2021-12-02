@@ -27,7 +27,7 @@ class Post extends Model
     }
     public function history()
     {
-        return $this->hasOne(History::class);
+        return $this->hasMany(History::class);
     }
 
     public static function getAll()

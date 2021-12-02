@@ -40,26 +40,36 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($posts as $post)
-                                <tr>
-                                    <th scope="row"><a href="{{ Storage::url($post->image->path) }}"
-                                            class="elv-zoom" data-fancybox-group="gallery" title="Title Here"><img
-                                                src="{{ Storage::url($post->image->path) }}" class="rounded-circle"
-                                                style="height:40px; width:40px;"> </a>
-                                        <span> <a href="{{ route('property.details', $post->id) }}"
-                                                style="color:#424767">{{ $post->name }}</a></span>
-                                    </th>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            {{ $post->category->categoryName }}
-                                        </div>
-                                    </td>
-                                    <td> {{ $post->rent_per_month }} <span class="text-success">XAF</span></td>
-                                    <td>
-                                        {{ $post->history->occurence }}@if ($post->history->occurence > 1) {{ 'times' }} @else {{ 'time' }} @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                            @if ($histories)
+                                @foreach ($histories as $history)
+                                    <tr>
+                                        <th scope="row"><a href="{{ Storage::url($history->post->image->path) }}"
+                                                class="elv-zoom" data-fancybox-group="gallery" title="Title Here"><img
+                                                    src="{{ Storage::url($history->post->image->path) }}" class="rounded-circle"
+                                                    style="height:40px; width:40px;"> </a>
+                                            <span> <a href="{{ route('property.details', $history->post->id) }}"
+                                                    style="color:#424767">{{ $history->post->name }}</a></span>
+                                        </th>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                {{ $history->post->category->categoryName }}
+                                            </div>
+                                        </td>
+                                        <td> {{ $history->post->rent_per_month }} <span class="text-success">XAF</span></td>
+                                        <td>
+                                            {{ $history->occurence }}@if ($history->occurence > 1) {{ 'times' }} @else {{ 'time' }} @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col" style="color: rgb(99, 96, 93)">{{ 'No Properties Consulted' }}</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                
+                            </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -68,7 +78,9 @@
         <!-- pagination -->
         <div class="row">
             <div class="col-3"></div>
-            <div class="col-3">{{ $posts->appends(request()->query())->links('pagination::bootstrap-4') }}</div>
+            @if ($histories)
+                <div class="col-3">{{ $histories->appends(request()->query())->links('pagination::bootstrap-4') }}   </div>
+            @endif
             <div class="col-3"></div>
         </div>
     </div>

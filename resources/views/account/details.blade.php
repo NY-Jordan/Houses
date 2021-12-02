@@ -1,8 +1,8 @@
 @extends('layouts/App/default')
 @section('content')
-    <<!-- her content -->
+     <!-- her content -->
         <div class="container">
-            <div class="row justify-content-center page-header-content-2">
+            <div class="row justify-content-center page-header-content-1">
 
                 <div class="col-md-6 pb-5">
                     <!-- product carousel -->

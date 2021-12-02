@@ -31,8 +31,8 @@
                 <li><a class="dropdown-item" href="{{ route("account") }}">Dashboard</a></li>
                 <li><a class="dropdown-item" href="{{ route('account.listed') }}">Listed</a></li>
                 <li><a class="dropdown-item" href="{{ route('account.consulted') }}">Consulted</a></li>
-                <li><a class="dropdown-item" href="#">Payments</a></li>
-                 <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="{{  route('account.payement') }} ">Payments</a></li>
+                 <li><a class="dropdown-item" href="{{ route('account.profile') }}">Profile</a></li>
             </ul>
         </li>
         <li class="nav-item">

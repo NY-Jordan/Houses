@@ -128,7 +128,7 @@
                                         class="fab fa-apple"></span></button>
                             </div>
                             <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
-                                <span class="font-weight-normal"> registered? <a href="{{  __('Register')  }}"
+                                <span class="font-weight-normal"> registered? <a href="{{  route('login')  }}"
                                         class="font-weight-bold">Sign in</a></span>
                             </div>
                         </div>

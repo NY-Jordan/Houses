@@ -40,6 +40,7 @@
 <div class="page-header" style="background-image:url('./img/headerimage.jpg');">
     @include('layouts/App/navbar')
         @yield('content')
+</div>
     
     <footer class="pt-4 pb-3 bg-dark text-white">
         <div class="container">
