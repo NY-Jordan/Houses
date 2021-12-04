@@ -17,10 +17,12 @@ class AccountController extends Controller
 {
     public function account(Request $request)
     {
-        $image_user = Image_user::where('user_id', Auth::user()->id)->first();
+        
         $posts =  Post::posts_by_user()->get();
         $number = count($posts);
         $categories = Categories::getall();
+        
+        
         $id_category_post = [];
         $number_of_category = 0;
         foreach ($posts as $post) {
@@ -52,17 +54,18 @@ class AccountController extends Controller
             'inquiries' => $inquiries,
             'times' => $times,
             'categories' => $number_of_category,
-            'image_user' =>$image_user
+            
+            
         ]);
     }
     public function listed()
     {
-        $image_user = Image_user::where('id', Auth::user()->id)->first();
+       
         $res = Post::posts_by_user();
         $posts = $this->paginate($res, 6);
         return view('account/listed', [
             'posts' => $posts,
-            'image_user' => $image_user
+            
         ]);
     }
     public function consulted()
@@ -71,21 +74,19 @@ class AccountController extends Controller
         $historyId = [];
         $posts = null;
         $histories = History::where('user_id', Auth::user()->id);
-        $image_user = Image_user::where('id', Auth::user()->id)->first();
-        
+       
         $histories = $this->paginate($histories, 8);
 
         return view('account/consulted', [
             'histories' => $histories,
-            'image_user' => $image_user
+            
         ]);
     }
     public function profile()
     {
-        $image_user = Image_user::where('id', Auth::user()->id)->first();
+        
         return view('account/profile', [
             'user' => Auth::user(),
-            'image_user' => $image_user
         ]);
     }
     public function profile_update(Request $request)
@@ -97,34 +98,29 @@ class AccountController extends Controller
 
         //upload image profile
         if ($request->image_user) {
+           
                 $filename = 'image'.$request->user()->name;
                 if (Storage::exists('/ImageUser/'.$request->user()->name.'/'.$filename)) {
                     Storage::delete('/ImageUser/'.$filename);
-                    $old_image = Image_user::where('user_id', $request->user()->id);
-                    $old_image->delete();
+                    
                     $path = $request->file("image_user")->storeAs(
                         'ImageUser/'.$request->user()->name, 
                         $filename,
                         'public'
                     );
-                    $image = new Image_user();
-                    $image->path =  $path;
-                    $image->user_id = $request->user()->id;
-                    $image->save();                     
-                }  else {
+                    $user = User::where('id', Auth::user()->id); 
+                    $user->image_user = $path;
+                    $user->save();                     
+                }   else {
                     $path = $request->file("image_user")->storeAs(
                         'ImageUser/'.$request->user()->name, 
                         $filename,
                         'public'
                     );
-                    $image = new Image_user();
-                    $image->path =  $path;
-                    $image->user_id = $request->user()->id;
-                    $image->save(); 
+                    $user = User::where('id', Auth::user()->id)->first(); 
+                    $user->image_user = $path;
+                    $user->save();  
                 }
-                
-                
-            
         }
 
 
@@ -156,9 +152,9 @@ class AccountController extends Controller
     { 
         
         $posts = null;
-        $image_user = Image_user::where('id', Auth::user()->id)->first();
+        
         return view('account/payement', [
-            'image_user' => $image_user,
+            
             'posts' => $posts
         ]);
     }
@@ -219,14 +215,15 @@ class AccountController extends Controller
         }
     }
 
-    public function details($id)
+    public function details($id, User $user)
     {
+        
         $post = Post::find($id);
         $imagesPost = Image::where('post_id', $post->id)->get();
         if (Auth::check()) {
             $name = Auth::user()->name;
             $history = History::where('user_id', Auth::user()->id)->where('post_id', $id)->get();
-            if (!$history[0]) {
+            if ($history->isEmpty()) {
                 $history_user = new History();
                 $history_user->user_id  =  Auth::user()->id;
                 $history_user->post_id = $id;
@@ -247,8 +244,12 @@ class AccountController extends Controller
         ]);
     }
 
-    public function edit(Request $request, $id)
+    public function edit(Request $request, $id, User $user)
     {
+        $post = Post::where('id', $id)->first();
+        if (!$user->can('update', $post)) {
+            abort('404');
+        }
         if ($request->method() === 'GET') {
             $post = Post::where('id', $id)->get();
             $categories = Categories::all();
@@ -282,9 +283,12 @@ class AccountController extends Controller
             'KeyWord' => $KeyWord,
         ]);
     }
-    public function delete($id)
+    public function delete($id, User $user)
     {
         $post  =  Post::where('id', $id)->delete();
+        if (!$user->can('delete', $post)) {
+            abort('404');
+        }
         return \redirect()->route('account.listed')->with('message', 'l\'annonce à bien été supprimer ');
     }
 

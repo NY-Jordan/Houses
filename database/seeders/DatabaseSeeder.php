@@ -19,9 +19,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CategorySeeder::class,
             CitySeed::class,
-            UserSeeder::class,
-            PostSeed::class,
-            ImageSeed::class
+            UserSeeder::class, 
+            ImageSeed::class,
         ]);
     }
 }

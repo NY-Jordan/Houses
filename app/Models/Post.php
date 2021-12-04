@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\Image;
 use App\Models\Cities;
 use App\Models\History;
@@ -38,6 +39,10 @@ class Post extends Model
     public static function posts_by_user()
     {
         return $posts = Post::where('user_id', Auth::user()->id);
+    }
+    public function User()
+    {
+        return $this->hasOne(User::class);
     }
 }
 

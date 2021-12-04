@@ -2,8 +2,8 @@
 <div class="col-12 col-md-4 d-none d-lg-block">
     <div class="card border-light p-2">
         <div class="card-body p-2">
-            <div class="profile-thumbnail small-thumbnail mx-auto"><a href="@if ($image_user)  {{ Storage::url($image_user->path) }} @else  {{ asset('img/avatar.jpg') }}  @endif" class="elv-zoom"
-                data-fancybox-group="gallery" title="Title Here"><img src="@if ($image_user)  {{ Storage::url($image_user->path) }} @else  {{ asset('img/avatar.jpg') }}  @endif" class="card-img-top rounded-circle border-white" alt="Joseph Portrait" /> </a> </div>
+            <div class="profile-thumbnail small-thumbnail mx-auto"><a href="{{ Storage::url(Auth::user()->image_user) }} " class="elv-zoom"
+                data-fancybox-group="gallery" title="Title Here"><img src="{{ Storage::url(Auth::user()->image_user) }}" class="card-img-top rounded-circle border-white" alt="Joseph Portrait" /> </a> </div>
             <h2 class="h5 font-weight-normal text-center mt-3 mb-0">{{ Auth::user()->name }}</h2>
             <div class="list-group dashboard-menu list-group-sm mt-4">
                 <a href="{{ route('account') }}" class="d-flex list-group-item list-group-item-action active">
