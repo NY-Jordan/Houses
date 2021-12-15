@@ -26,6 +26,7 @@
                             <li><a class="dropdown-item" href="{{ route('login') }}">Login</a></li>
                         @endif
                         <li><a class="dropdown-item" href="#">Support</a></li>
+                        <li><a class="dropdown-item" href="{{ route('account') }}"> My Acount</a></li>
                     </ul>
                 </li>
             </ul>
