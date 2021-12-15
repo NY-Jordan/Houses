@@ -72,7 +72,7 @@
                                             </span>
                                         </div>
                                         <input class="form-control" id="email"
-                                            value="{{ __('example@company.com') }}" name="email"
+                                            value="" name="email"
                                             placeholder="example@company.com" type="text" aria-label="email address">
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@
                                                         class="fas fa-unlock-alt"></span></span>
                                             </div>
                                             <input class="form-control" id="password" name="password"
-                                                placeholder="Password" value="{{ __('password') }} " type="password"
+                                                placeholder="Password" value="" type="password"
                                                 aria-label="Password" required="">
                                         </div>
                                     </div>

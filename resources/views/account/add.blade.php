@@ -110,7 +110,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="text-input" class="form-label">Address</label>
-                                        <input class="form-control" value="{{ old('email') }}" name="email" type="email"
+                                        <input class="form-control" value="" name="Adress" type="text"
                                             id="text-input">
                                     </div>
                                     <div class="mb-3">
