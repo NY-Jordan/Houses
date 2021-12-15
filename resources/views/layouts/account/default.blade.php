@@ -48,7 +48,7 @@
         @include('layouts/account/header')   
         <main>
             <div class="preloader bg-dark flex-column justify-content-center align-items-center">
-                <div class="position-relative"><img src="../../assets/img/brand/light-without-letter.svg" alt="Logo loader" /> <img src="../../assets/img/brand/letter.svg" class="rotate-letter" alt="Letter loader" /></div>
+                <div class="position-relative"><img src="{{ asset('img/logo-light.png') }}" alt="Logo loader" /></div>
             </div>
             <div class="section section-lg bg-soft">
                 <div class="container">
