@@ -28,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/account/profile', [AccountController::class, 'profile'])->name('account.profile');
     Route::get('/account/payement', [AccountController::class, 'payement'])->name('account.payement');
     Route::post('/update-profile', [AccountController::class,  'profile_update'])->name('profile.update');
+    Route::get('/getcontact/{id}', [AccountController::class, 'getcontact'])->name('getcontact');
 });
 Route::get('/property/{id}/details', [AccountController::class, 'details'])->name('property.details');
 Route::get('/result', [AppController::class, 'result'])->name('result');
@@ -36,5 +37,6 @@ Route::get('/posts-by-category/{id}', [AppController::class, 'by_category'])->na
 Route::get('/Posts-by-city', [AppController::class, 'by_city'])->name('post.city');
 Route::get('/Posts-by-price', [AppController::class, 'by_price'])->name('post.price');
 Route::get('/', [AppController::class, 'index'])->name('index');
+
 
 require __DIR__.'/auth.php';

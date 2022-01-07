@@ -9,7 +9,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class UserSeeder extends Seeder
+class WalletSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,9 +18,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory()
-        ->count(3)
-        ->create();
-        
+        Wallet::factory()
+            ->count(3)
+            ->create();
     }
 }

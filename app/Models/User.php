@@ -46,5 +46,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Post::class);
     }
+    public function wallet()
+    {
+        return $this->hasOne(Wallet::class);
+    }
+
     
 }

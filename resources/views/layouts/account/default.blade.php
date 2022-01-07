@@ -107,6 +107,7 @@
 <script src="{{ asset('assets/js/jquery.vmap.usa.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.slideform.js') }}"></script>
 <script src="{{ asset('assets/js/spaces.js') }}"></script>
+
 <script type="text/javascript">
     new Chartist.Line('.line-chart-filled', {
 labels: [1, 2, 3, 4, 5, 6, 7, 8],

@@ -9,6 +9,7 @@ use App\Models\Cities;
 use App\Models\History;
 use App\Models\Categories;
 use App\Models\Image_user;
+use App\Models\Show_phone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -21,7 +22,6 @@ class AccountController extends Controller
         $posts =  Post::posts_by_user()->get();
         $number = count($posts);
         $categories = Categories::getall();
-        
         
         $id_category_post = [];
         $number_of_category = 0;
@@ -219,6 +219,10 @@ class AccountController extends Controller
     {
         
         $post = Post::find($id);
+        if (!$post) {
+            abort('404');
+        }
+        $show_phone = Show_phone::where('user_id', Auth::id())->where('post_id', $id)->first();
         $imagesPost = Image::where('post_id', $post->id)->get();
         if (Auth::check()) {
             $name = Auth::user()->name;
@@ -240,8 +244,28 @@ class AccountController extends Controller
         }
         return \view('account/details', [
             'post' => $post,
-            'imagesPost' => $imagesPost
+            'imagesPost' => $imagesPost,
+            'show_phone' => $show_phone
         ]);
+    }
+
+    public function getcontact($id)
+    {
+        $user = User::where('id', Auth::id())->first();
+        $balance  = $user->wallet->balance;
+        if ($balance >= 5) {
+
+            $user->wallet->balance = $user->wallet->balance - 5;
+            $show_phone = new Show_phone();
+            $show_phone->user_id = Auth::id();
+            $show_phone->post_id = $id;
+            $show_phone->statut = true;
+            $show_phone->save();
+            $user->wallet->save(); 
+            return redirect()->back()->with('success', 'operation succefully !');
+        } else {
+            return redirect()->back()->with('error', 'you do not have enough points to perform this operation !');
+        }
     }
 
     public function edit(Request $request, $id, User $user)
@@ -296,4 +320,6 @@ class AccountController extends Controller
     {
         return $request->paginate($bypage);
     }
+
+    
 }
