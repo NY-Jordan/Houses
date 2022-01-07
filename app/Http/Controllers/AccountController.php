@@ -12,17 +12,18 @@ use App\Models\Image_user;
 use App\Models\Show_phone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
 class AccountController extends Controller
 {
     public function account(Request $request)
     {
-        
+
         $posts =  Post::posts_by_user()->get();
         $number = count($posts);
         $categories = Categories::getall();
-        
+
         $id_category_post = [];
         $number_of_category = 0;
         foreach ($posts as $post) {
@@ -54,18 +55,18 @@ class AccountController extends Controller
             'inquiries' => $inquiries,
             'times' => $times,
             'categories' => $number_of_category,
-            
-            
+
+
         ]);
     }
     public function listed()
     {
-       
+
         $res = Post::posts_by_user();
         $posts = $this->paginate($res, 6);
         return view('account/listed', [
             'posts' => $posts,
-            
+
         ]);
     }
     public function consulted()
@@ -74,17 +75,17 @@ class AccountController extends Controller
         $historyId = [];
         $posts = null;
         $histories = History::where('user_id', Auth::user()->id);
-       
+
         $histories = $this->paginate($histories, 8);
 
         return view('account/consulted', [
             'histories' => $histories,
-            
+
         ]);
     }
     public function profile()
     {
-        
+
         return view('account/profile', [
             'user' => Auth::user(),
         ]);
@@ -93,34 +94,34 @@ class AccountController extends Controller
     {
         //update personal information
         $request->user()->name  = $request->name ?? $request->user()->name;
-        $request->user()->email  = $request->email ?? $request->user()->email;     
-        
+        $request->user()->email  = $request->email ?? $request->user()->email;
+
 
         //upload image profile
         if ($request->image_user) {
-           
-                $filename = 'image'.$request->user()->name;
-                if (Storage::exists('/ImageUser/'.$request->user()->name.'/'.$filename)) {
-                    Storage::delete('/ImageUser/'.$filename);
-                    
-                    $path = $request->file("image_user")->storeAs(
-                        'ImageUser/'.$request->user()->name, 
-                        $filename,
-                        'public'
-                    );
-                    $user = User::where('id', Auth::user()->id); 
-                    $user->image_user = $path;
-                    $user->save();                     
-                }   else {
-                    $path = $request->file("image_user")->storeAs(
-                        'ImageUser/'.$request->user()->name, 
-                        $filename,
-                        'public'
-                    );
-                    $user = User::where('id', Auth::user()->id)->first(); 
-                    $user->image_user = $path;
-                    $user->save();  
-                }
+
+            $filename = 'image' . $request->user()->name;
+            if (Storage::exists('/ImageUser/' . $request->user()->name . '/' . $filename)) {
+                Storage::delete('/ImageUser/' . $filename);
+
+                $path = $request->file("image_user")->storeAs(
+                    'ImageUser/' . $request->user()->name,
+                    $filename,
+                    'public'
+                );
+                $user = User::where('id', Auth::user()->id);
+                $user->image_user = $path;
+                $user->save();
+            } else {
+                $path = $request->file("image_user")->storeAs(
+                    'ImageUser/' . $request->user()->name,
+                    $filename,
+                    'public'
+                );
+                $user = User::where('id', Auth::user()->id)->first();
+                $user->image_user = $path;
+                $user->save();
+            }
         }
 
 
@@ -142,22 +143,11 @@ class AccountController extends Controller
             } else {
                 return back()->with('message', 'confirm password it is not correct');
             }
-            
-            
         }
         $request->user()->save();
         return back()->with('message', 'your profile has been successfully modified');
     }
-    public function payement()
-    { 
-        
-        $posts = null;
-        
-        return view('account/payement', [
-            
-            'posts' => $posts
-        ]);
-    }
+
     public function AccountAdd(Request $request)
     {
         if ($request->method() === 'GET') {
@@ -217,7 +207,7 @@ class AccountController extends Controller
 
     public function details($id, User $user)
     {
-        
+
         $post = Post::find($id);
         if (!$post) {
             abort('404');
@@ -261,7 +251,7 @@ class AccountController extends Controller
             $show_phone->post_id = $id;
             $show_phone->statut = true;
             $show_phone->save();
-            $user->wallet->save(); 
+            $user->wallet->save();
             return redirect()->back()->with('success', 'operation succefully !');
         } else {
             return redirect()->back()->with('error', 'you do not have enough points to perform this operation !');
@@ -320,6 +310,36 @@ class AccountController extends Controller
     {
         return $request->paginate($bypage);
     }
+    public function payment($montant)
+    {
 
-    
+        //request for obtain token
+        $request_token = Http::post('https://demo.campay.net/api/token/', [
+            "username" =>  "0Fcu5IQtEV2olUIxwgjoxhyJiPBtLMG-gAHHG3TsnmGRG9laJessydq_CdMG-rD44ubMPanJnn-On-iuqpjTIg",
+            "password" => "UU3_yThxMwfBQdQ-p-qOpnUb2Ybtl67w8aC7YpnuQwg6HKgVCQLZTzJBEiB_Icb8FhXRUis4FLIS66Q2VdGtVw"
+        ]);        
+        $token   = $request_token->json()['token'];
+
+        //request for obtain the payement links
+        $response = Http::withHeaders([
+            'Authorization' => 'Token '.$token,
+        ])->post('https://demo.campay.net/api/get_payment_link/', [
+            'Authorization' => 'Token '.$token,
+            "amount" => $montant,
+            "currency" => "XAF",
+            "redirect_url" => "localhost:8000/payement/successful"
+        ]);   
+        if ($response->status() === 400) {
+            return redirect()->back()->with('message', 'nous avons quelques problèmes veuillez réessayer plus tard');
+        }
+        $link = $response->json()['link'];
+        return redirect($link);
+    }
+    public function payment_successful()
+    {
+        $user = User::where('id', Auth::id())->get();
+        $user->wallet->balance = $user->wallet->balance + 50;
+        $user->wallet->save();
+        return redirect('')->with('achat de points reussie !! votre balance est de'.$user->wallet->balance.'points');
+    }
 }

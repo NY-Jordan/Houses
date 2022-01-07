@@ -16,6 +16,7 @@ use App\Http\Controllers\AccountController;
 */
 
 Route::middleware(['auth'])->group(function () {
+
     Route::get('/account', [AccountController::class, 'Account'])->name('account');
     Route::get('/account/listed', [AccountController::class, 'listed'])->name('account.listed');
     Route::get('/account/consulted', [AccountController::class, 'consulted'])->name('account.consulted');
@@ -29,7 +30,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/account/payement', [AccountController::class, 'payement'])->name('account.payement');
     Route::post('/update-profile', [AccountController::class,  'profile_update'])->name('profile.update');
     Route::get('/getcontact/{id}', [AccountController::class, 'getcontact'])->name('getcontact');
+    Route::get('/payment/{montant}', [AccountController::class, 'payment'])->name('payment');
+    Route::get('/payement/successful', [AccountController::class, 'payment_successful']);
 });
+
+
 Route::get('/property/{id}/details', [AccountController::class, 'details'])->name('property.details');
 Route::get('/result', [AppController::class, 'result'])->name('result');
 Route::get('/search', [AppController::class, 'search'])->name('app.search');
