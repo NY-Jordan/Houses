@@ -130,7 +130,9 @@
             </div>
         </div>
     </div>
-    @include('components/points')
+    @if (Auth::check())
+        @include('components/points')
+    @endif
     <section>
 
     </section>
