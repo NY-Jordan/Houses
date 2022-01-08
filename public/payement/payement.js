@@ -14,6 +14,7 @@ button_close_confirm = document.querySelector('#closeconfirm')
 button_close_confirm.addEventListener('click', function() {
     $('#confirm').modal('hide')
 })
+
 button_close_points = document.querySelector('#close_points')
 button_close_points.addEventListener('click', function() {
     $('#points').modal('hide')

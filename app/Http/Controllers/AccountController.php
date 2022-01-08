@@ -312,7 +312,7 @@ class AccountController extends Controller
     }
     public function payment($montant)
     {
-
+        
         //request for obtain token
         $request_token = Http::post('https://demo.campay.net/api/token/', [
             "username" =>  "0Fcu5IQtEV2olUIxwgjoxhyJiPBtLMG-gAHHG3TsnmGRG9laJessydq_CdMG-rD44ubMPanJnn-On-iuqpjTIg",
@@ -320,6 +320,7 @@ class AccountController extends Controller
         ]);        
         $token   = $request_token->json()['token'];
 
+        
         //request for obtain the payement links
         $response = Http::withHeaders([
             'Authorization' => 'Token '.$token,
@@ -327,7 +328,7 @@ class AccountController extends Controller
             'Authorization' => 'Token '.$token,
             "amount" => $montant,
             "currency" => "XAF",
-            "redirect_url" => "localhost:8000/payement/successful"
+            "redirect_url" => "http://localhost:8000/payement/successful"
         ]);   
         if ($response->status() === 400) {
             return redirect()->back()->with('message', 'nous avons quelques problèmes veuillez réessayer plus tard');
@@ -335,11 +336,12 @@ class AccountController extends Controller
         $link = $response->json()['link'];
         return redirect($link);
     }
-    public function payment_successful()
+    public function payment_successful(Request $request)
     {
-        $user = User::where('id', Auth::id())->get();
-        $user->wallet->balance = $user->wallet->balance + 50;
+        $amount = $request->amount;
+        $user = User::where('id', Auth::id())->first();
+        $user->wallet->balance = $user->wallet->balance + $amount;
         $user->wallet->save();
-        return redirect('')->with('achat de points reussie !! votre balance est de'.$user->wallet->balance.'points');
+        return redirect('/account')->with('message', 'purchase of points successful !! your balance is '.$user->wallet->balance.' points');
     }
 }

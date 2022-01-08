@@ -49,13 +49,13 @@
         </div>
         <div class="section section-lg bg-soft">
             <div class="container">
+                @if (session()->has('message'))
+                    <div class="alert alert-danger">
+                        {{ session()->get('message') }}
+                    </div>
+                @endif
                 <div class="row pt-5 pt-md-0">
                     @include('layouts/relative-header')
-                    @if (session()->has('message'))
-                        <div class="alert alert-danger">
-                            {{ session()->get('message') }}
-                        </div>
-                    @endif
                     @yield('content')
 
                 </div>
