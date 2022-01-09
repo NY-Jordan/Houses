@@ -18,9 +18,6 @@
                 <div class="d-flex ml-3 mt-2">
                     <p class="text-muted text-uppercase font-weight-bold small" style="font-size:10pt;">Settings</p>
                 </div>
-                <a href="{{ route('account.payement') }}" class="d-flex list-group-item list-group-item-action">
-                    Payments<span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span>
-                </a>
                 <a href="{{ route('account.profile') }}" class="d-flex list-group-item list-group-item-action">
                 Profile<span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span>
                 </a>

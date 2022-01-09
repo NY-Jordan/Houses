@@ -24,22 +24,22 @@
                     <div>
                         <li class="row mb-4">
                             <div class="col-8" style="font-size: 20px">10 points / 10 F cfa</div>
-                            <a class="col-4"  href="{{ route('payment', 10) }}"><button class="btn btn-secondary">Suscribe</button></a>
+                            <a class="col-4"  href="{{ route('payment', ['montant' => 10, 'points' => 10]) }}"><button class="btn btn-secondary">Suscribe</button></a>
 
                         </li>
                         <li class="row mb-4">
                             <div class="col-8" style="font-size: 20px">30 points / 25 F cfa</div>
-                            <a  class="col-4" href="{{ route('payment', 25) }}"><button class="btn btn-secondary">Suscribe</button></a>
+                            <a  class="col-4" href="{{ route('payment', ['montant' => 25, 'points' => 30]) }}"><button class="btn btn-secondary">Suscribe</button></a>
 
                         </li>
                         <li class="row mb-4">
                             <div class="col-8" style="font-size: 20px">50 points / 75 F cfa</div>
-                            <a  class="col-4" href="{{ route('payment', 75) }}"><button class="btn btn-secondary">Suscribe</button></a>
+                            <a  class="col-4" href="{{ route('payment', ['montant' => 75, 'points' => 50]) }}"><button class="btn btn-secondary">Suscribe</button></a>
 
                         </li>
                         <li class="row mb-4">
                             <div class="col-8" style="font-size: 20px">100 points / 100 F cfa</div>
-                            <a  class="col-4" href="{{ route('payment', 100) }}"><button class=" btn btn-secondary">Suscribe</button></a>
+                            <a  class="col-4" href="{{ route('payment', ['montant' => 100, 'points' => 100]) }}"><button class=" btn btn-secondary">Suscribe</button></a>
 
                         </li>
                     </div>

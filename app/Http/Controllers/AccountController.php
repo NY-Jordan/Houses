@@ -310,7 +310,7 @@ class AccountController extends Controller
     {
         return $request->paginate($bypage);
     }
-    public function payment($montant)
+    public function payment(Request $request,$montant, $points)
     {
         
         //request for obtain token
@@ -322,26 +322,50 @@ class AccountController extends Controller
 
         
         //request for obtain the payement links
+        $reference = 'House-payment-by-campay-'.uniqid();
         $response = Http::withHeaders([
             'Authorization' => 'Token '.$token,
         ])->post('https://demo.campay.net/api/get_payment_link/', [
             'Authorization' => 'Token '.$token,
             "amount" => $montant,
+            "external_reference" => $reference,
             "currency" => "XAF",
-            "redirect_url" => "http://localhost:8000/payement/successful"
+            "redirect_url" => "http://localhost:8000/payement/status"
         ]);   
         if ($response->status() === 400) {
             return redirect()->back()->with('message', 'nous avons quelques problèmes veuillez réessayer plus tard');
         }
         $link = $response->json()['link'];
+        $request->session()->push('points', $points);
+        $request->session()->push('token', $token);
         return redirect($link);
     }
-    public function payment_successful(Request $request)
+    public function payment_status(Request $request)
     {
-        $amount = $request->amount;
-        $user = User::where('id', Auth::id())->first();
-        $user->wallet->balance = $user->wallet->balance + $amount;
-        $user->wallet->save();
-        return redirect('/account')->with('message', 'purchase of points successful !! your balance is '.$user->wallet->balance.' points');
+        
+        $token = $request->session()->get('token');
+        $points = $request->session()->get('points');
+        $reference = $request->reference;
+        $response = Http::withHeaders([
+            'Authorization' => 'Token '.$token[0],
+        ])->get('https://demo.campay.net/api/transaction/'.$reference.'/', [
+            'Authorization' => 'Token '.$token[0],
+        ]);
+        $request->session()->forget('points');
+        $request->session()->forget('token');
+
+        if ($response->status() === 401) {
+            return redirect('/account')->with('message', "we have many problems please try later");
+        }
+
+        if ($response->json()['status'] === "SUCCESSFUL") {
+            $user = User::where('id', Auth::id())->first();
+            $user->wallet->balance = $user->wallet->balance + $points[0];
+            $user->wallet->save();
+            return redirect('/account')->with('message', 'purchase of points successful !! your balance is '.$user->wallet->balance.' points');
+        } elseif ($response->json()['status'] === "FAILED") {
+            return redirect('/account')->with('message', "check the amount of your balance  and try again");
+        }
+        
     }
 }

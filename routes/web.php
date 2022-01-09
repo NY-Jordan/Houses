@@ -30,8 +30,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/account/payement', [AccountController::class, 'payement'])->name('account.payement');
     Route::post('/update-profile', [AccountController::class,  'profile_update'])->name('profile.update');
     Route::get('/getcontact/{id}', [AccountController::class, 'getcontact'])->name('getcontact');
-    Route::get('/payment/{montant}', [AccountController::class, 'payment'])->name('payment');
-    Route::get('/payement/successful', [AccountController::class, 'payment_successful']);
+    Route::get('/payment/{montant}/{points}', [AccountController::class, 'payment'])->name('payment');
+    Route::get('/payement/status', [AccountController::class, 'payment_status']);
 });
 
 

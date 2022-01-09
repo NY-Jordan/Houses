@@ -33,7 +33,6 @@
                             <li><a class="dropdown-item" href="{{ route('account.consulted') }}">Consulted</a></li>
                             <li><a class="dropdown-item" data-toggle="modal" data-target="#points" href="">My
                                     Points</a></li>
-                            <li><a class="dropdown-item" href="{{ route('account.payement') }} ">Payments</a></li>
                             <li><a class="dropdown-item" href="{{ route('account.profile') }}">Profile</a></li>
                         </ul>
                     </li>
