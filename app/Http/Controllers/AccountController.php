@@ -262,7 +262,7 @@ class AccountController extends Controller
     {
         $post = Post::where('id', $id)->first();
         if (!$user->can('update', $post)) {
-            abort('404');
+            abort('401');
         }
         if ($request->method() === 'GET') {
             $post = Post::where('id', $id)->get();
@@ -271,7 +271,7 @@ class AccountController extends Controller
                 'post' => $post[0],
                 'categories' => $categories
             ]);
-        } else {
+        } elseif ($request->method() === 'POST') {
             $post = Post::where('id', $id)->first();
             $post->name = $request->name ?? $post->name;
             $post->description = $request->description ?? $post->description;
@@ -299,11 +299,14 @@ class AccountController extends Controller
     }
     public function delete($id, User $user)
     {
-        $post  =  Post::where('id', $id)->delete();
+        $post  =  Post::where('id', $id)->first();
         if (!$user->can('delete', $post)) {
-            abort('404');
+            abort('401');
+        } else {
+            $post->delete();
+            return \redirect()->route('account.listed')->with('message', 'l\'annonce à bien été supprimer ');
         }
-        return \redirect()->route('account.listed')->with('message', 'l\'annonce à bien été supprimer ');
+        
     }
 
     public function paginate($request, int $bypage)
