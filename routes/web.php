@@ -27,7 +27,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('account/property/{id}/delete', [AccountController::class, 'delete'])->name('property.delete');
     Route::get('account/search', [AccountController::class, 'search'])->name('account.search');
     Route::get('/account/profile', [AccountController::class, 'profile'])->name('account.profile');
-    Route::get('/account/payement', [AccountController::class, 'payement'])->name('account.payement');
+    Route::get('/account/transaction', [AccountController::class, 'transaction'])->name('account.transaction');
     Route::post('/update-profile', [AccountController::class,  'profile_update'])->name('profile.update');
     Route::get('/getcontact/{id}', [AccountController::class, 'getcontact'])->name('getcontact');
     Route::get('/payment/{montant}/{points}', [AccountController::class, 'payment'])->name('payment');

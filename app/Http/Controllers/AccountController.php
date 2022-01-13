@@ -10,6 +10,7 @@ use App\Models\History;
 use App\Models\Categories;
 use App\Models\Image_user;
 use App\Models\Show_phone;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -324,7 +325,7 @@ class AccountController extends Controller
         $token   = $request_token->json()['token'];
 
         
-        //request for obtain the payement links
+        //request for obtain the payment links
         $reference = 'House-payment-by-campay-'.uniqid();
         $response = Http::withHeaders([
             'Authorization' => 'Token '.$token,
@@ -347,28 +348,48 @@ class AccountController extends Controller
     {
         
         $token = $request->session()->get('token');
+        $amount  = $request->amount;
         $points = $request->session()->get('points');
         $reference = $request->reference;
+        //request for obtain the sstatus
         $response = Http::withHeaders([
             'Authorization' => 'Token '.$token[0],
         ])->get('https://demo.campay.net/api/transaction/'.$reference.'/', [
             'Authorization' => 'Token '.$token[0],
         ]);
-        $request->session()->forget('points');
         $request->session()->forget('token');
 
         if ($response->status() === 401) {
-            return redirect('/account')->with('message', "we have many problems please try later");
+            return redirect('/account/transaction')->with('message', "we have many problems please try later");
         }
 
+        //save transaction
+        $transaction  = new Transaction();
+        $transaction->status = $response->json()['status'];
+        $transaction->price = (int)$amount;
+        $transaction->points = $points[0];
+        $transaction->user_id = Auth::id();
+        $transaction->save();
+
+        $user = User::where('id', Auth::id())->first();
         if ($response->json()['status'] === "SUCCESSFUL") {
-            $user = User::where('id', Auth::id())->first();
             $user->wallet->balance = $user->wallet->balance + $points[0];
             $user->wallet->save();
-            return redirect('/account')->with('message', 'purchase of points successful !! your balance is '.$user->wallet->balance.' points');
+            $request->session()->forget('points');
+            return redirect('account/transaction')->with('message', 'purchase of points successful !! your balance is '.$user->wallet->balance.' points');
         } elseif ($response->json()['status'] === "FAILED") {
-            return redirect('/account')->with('message', "check the amount of your balance  and try again");
+            return redirect('account/transaction')->with('message', "check the amount of your balance  and try again");
         }
         
+    }
+    public function transaction()
+    {
+       
+        $balance  = Auth::user()->wallet->balance;
+        $transactions = Transaction::where('user_id', Auth::id())->get();
+        return view('account/transactions', [
+            'balance' => $balance,
+            'transactions' => $transactions
+        ]);
     }
 }

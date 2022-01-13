@@ -15,6 +15,9 @@
                 <a href="{{ route('account.consulted') }}" class="d-flex list-group-item list-group-item-action">
                     Consulted<span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span>
                 </a>
+                <a href="{{ route('account.transaction') }}" class="d-flex list-group-item list-group-item-action">
+                    Transaction<span class="icon icon-xs ml-auto"><span class="fas fa-chevron-right"></span></span>
+                </a>
                 <div class="d-flex ml-3 mt-2">
                     <p class="text-muted text-uppercase font-weight-bold small" style="font-size:10pt;">Settings</p>
                 </div>
