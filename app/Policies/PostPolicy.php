@@ -54,7 +54,7 @@ class PostPolicy
      */
     public function update(User $user, Post $post)
     {
-      return  $post->user_id === Auth::user()->id;
+        return  $post->user_id === $user->id;
     }
     /**
      * Determine whether the user can delete the model.
@@ -65,7 +65,7 @@ class PostPolicy
      */
     public function delete(User $user, Post $post)
     {
-        return  $post->user_id === Auth::user()->id;
+        return  $post->user_id === $user->id;
     }
 
     /**

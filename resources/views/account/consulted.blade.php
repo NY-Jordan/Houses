@@ -20,10 +20,6 @@
                     </div>
                 </div>
             </form>
-            <div class="col-md-6 col-sm-6 mb-3">
-                <a href="{{ route('account.add') }}"><button class="btn btn-primary" type="button">+ Add
-                        property</button></a>
-            </div>
         </div>
 
         <!-- listed properties -->

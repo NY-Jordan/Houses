@@ -107,15 +107,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-25">
-                        you have entered to want to obtain the telephone number for the post
+                        Obtain the telephone number for the post
                         <strong>{{ $post->name }}</strong>
                         this operation will cost you 5 points, which will be deducted from your wallet
                     </div>
-
-
                 </div>
                 <div class="modal-footer">
-                    <div class="row">
+                    <div class="row text-center">
                         <div class="col-4">
                             <a href="{{ route('getcontact', $post->id) }}"><button type="button"
                                     class="btn btn-primary">Confirm</button> </a>
@@ -124,7 +122,7 @@
                         <div class="col-4" style="margin-bottom: 10px">
                             <button id="closeconfirm" type="button" class="btn btn-secondary">Cancel</button>
                         </div>
-                        to get seller's phone you need points
+                        <a href="#">Lean more</a>
                     </div>
                 </div>
             </div>

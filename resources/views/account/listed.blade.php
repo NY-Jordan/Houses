@@ -50,12 +50,12 @@
                                     aria-haspopup="true" aria-expanded="false"><button
                                         class="btn btn-sm btn-primary dropup">action</button></a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownaction">
-                                    <li><a class="dropdown-item" href="{{ route('property.edit', $post->id) }}">Edit</a>
+                                    <li class="dropdown-item"><a class="btn btn-sm btn-default" href="{{ route('property.edit', $post->id) }}">Edit</a>
                                     </li>
-                                    <li>
+                                    <li class="dropdown-item">
                                         <form action="{{ route('property.delete', $post->id) }}" method="post">
                                             @csrf
-                                            <button class="nav nav-item" type="submit"> Delete</button>
+                                            <button class="btn btn-sm btn-default" type="submit"> Delete</button>
                                         </form>
 
                                     </li>

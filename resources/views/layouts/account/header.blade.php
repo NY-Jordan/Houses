@@ -1,6 +1,6 @@
 <header class="header-global">
     <!--navbar -->
-    <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark navbar-theme-primary mb-4">
+    <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark navbar-theme-primary">
         <div class="container position-relative">
             <a class="navbar-brand mr-lg-3" href="{{ route('account') }}">
                 <img class="navbar-brand-dark" src="{{ asset('img/logo-light.png') }}" alt="menuimage">
