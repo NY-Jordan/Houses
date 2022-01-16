@@ -206,7 +206,7 @@ class AccountController extends Controller
         }
     }
 
-    public function details($id, User $user)
+    public function details($id)
     {
 
         $post = Post::find($id);
@@ -301,23 +301,14 @@ class AccountController extends Controller
     }
     public function delete($id)
     {
-<<<<<<< HEAD
-        $user = Auth::user();
-        $post  =  Post::find($id)->delete();
-        if (is_null($post)) {
-            abort('404');
-        }
-
-=======
         $post  =  Post::where('id', $id)->first();
->>>>>>> 0c50fb2ed6549914fec7ac2d92980091d511885f
+        $user = Auth::user();
         if (!$user->can('delete', $post)) {
             abort('401');
         } else {
             $post->delete();
             return \redirect()->route('account.listed')->with('message', 'l\'annonce à bien été supprimer ');
         }
-        
     }
 
     public function paginate($request, int $bypage)
@@ -333,16 +324,8 @@ class AccountController extends Controller
             "password" => "UU3_yThxMwfBQdQ-p-qOpnUb2Ybtl67w8aC7YpnuQwg6HKgVCQLZTzJBEiB_Icb8FhXRUis4FLIS66Q2VdGtVw"
         ]);
         $token   = $request_token->json()['token'];
-
-<<<<<<< HEAD
-
-        //request for obtain the payement links
-        $reference = 'House-payment-by-campay-' . uniqid();
-=======
-        
         //request for obtain the payment links
-        $reference = 'House-payment-by-campay-'.uniqid();
->>>>>>> 0c50fb2ed6549914fec7ac2d92980091d511885f
+        $reference = 'House-payment-by-campay-' . uniqid();
         $response = Http::withHeaders([
             'Authorization' => 'Token ' . $token,
         ])->post('https://demo.campay.net/api/get_payment_link/', [
@@ -391,19 +374,15 @@ class AccountController extends Controller
         if ($response->json()['status'] === "SUCCESSFUL") {
             $user->wallet->balance = $user->wallet->balance + $points[0];
             $user->wallet->save();
-<<<<<<< HEAD
-            return redirect('/account')->with('message', 'purchase of points successful !! your balance is ' . $user->wallet->balance . ' points');
-=======
             $request->session()->forget('points');
-            return redirect('account/transaction')->with('message', 'purchase of points successful !! your balance is '.$user->wallet->balance.' points');
->>>>>>> 0c50fb2ed6549914fec7ac2d92980091d511885f
+            return redirect('account/transaction')->with('message', 'purchase of points successful !! your balance is ' . $user->wallet->balance . ' points');
         } elseif ($response->json()['status'] === "FAILED") {
             return redirect('account/transaction')->with('message', "check the amount of your balance  and try again");
         }
     }
     public function transaction()
     {
-       
+
         $balance  = Auth::user()->wallet->balance;
         $transactions = Transaction::where('user_id', Auth::id())->get();
         return view('account/transactions', [
