@@ -16,16 +16,21 @@
 
                 <div class="form col-md-3">
                     <div class="">
-                        <input type="text" name="location" class="form-control" style="border-radius:2rem;" id=""
+                        <input type="text" name="location" value="{{ old('location') }}" class="form-control" style="border-radius:2rem;" id=""
                             placeholder="location" aria-describedby="">
                     </div>
                 </div>
 
                 <div class="form col-md-3">
-                    <div class="">
-                        <input type="number" name="budget" class="form-control" style="border-radius:2rem;" id=""
-                            placeholder="budget" aria-describedby="">
-                    </div>
+                    <select class="form-select " name="budget" style="border-radius:2rem;"
+                    aria-label="Default select example">
+                        <option value="{{ null }}">Bugget</option>
+                        <option value="0-30000">0-30000</option> 
+                        <option value="30000-70000">30000-70000</option> 
+                        <option value="70000-100000">70000-100000</option> 
+                        <option value="10000-300000">10000-300000</option> 
+                        <option value="30000">300000 et plus</option> 
+                    </select>
                 </div>
 
                 <div class="form col-md-3">

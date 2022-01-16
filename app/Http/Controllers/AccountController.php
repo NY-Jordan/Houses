@@ -10,6 +10,7 @@ use App\Models\History;
 use App\Models\Categories;
 use App\Models\Image_user;
 use App\Models\Show_phone;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -263,7 +264,7 @@ class AccountController extends Controller
         $user = Auth::user();
         $post = Post::find($id);
         if (!$user->can('update', $post)) {
-            abort('404');
+            abort('401');
         }
         if ($request->method() === 'GET') {
             $post = Post::find($id);
@@ -272,8 +273,8 @@ class AccountController extends Controller
                 'post' => $post,
                 'categories' => $categories
             ]);
-        } else {
-            $post = Post::find($id);
+        } elseif ($request->method() === 'POST') {
+            $post = Post::where('id', $id)->first();
             $post->name = $request->name ?? $post->name;
             $post->description = $request->description ?? $post->description;
             $post->email = $request->email ?? $post->email;
@@ -300,16 +301,23 @@ class AccountController extends Controller
     }
     public function delete($id)
     {
+<<<<<<< HEAD
         $user = Auth::user();
         $post  =  Post::find($id)->delete();
         if (is_null($post)) {
             abort('404');
         }
 
+=======
+        $post  =  Post::where('id', $id)->first();
+>>>>>>> 0c50fb2ed6549914fec7ac2d92980091d511885f
         if (!$user->can('delete', $post)) {
-            abort('404');
+            abort('401');
+        } else {
+            $post->delete();
+            return \redirect()->route('account.listed')->with('message', 'l\'annonce à bien été supprimer ');
         }
-        return \redirect()->route('account.listed')->with('message', 'l\'annonce à bien été supprimer ');
+        
     }
 
     public function paginate($request, int $bypage)
@@ -326,9 +334,15 @@ class AccountController extends Controller
         ]);
         $token   = $request_token->json()['token'];
 
+<<<<<<< HEAD
 
         //request for obtain the payement links
         $reference = 'House-payment-by-campay-' . uniqid();
+=======
+        
+        //request for obtain the payment links
+        $reference = 'House-payment-by-campay-'.uniqid();
+>>>>>>> 0c50fb2ed6549914fec7ac2d92980091d511885f
         $response = Http::withHeaders([
             'Authorization' => 'Token ' . $token,
         ])->post('https://demo.campay.net/api/get_payment_link/', [
@@ -350,27 +364,51 @@ class AccountController extends Controller
     {
 
         $token = $request->session()->get('token');
+        $amount  = $request->amount;
         $points = $request->session()->get('points');
         $reference = $request->reference;
+        //request for obtain the sstatus
         $response = Http::withHeaders([
             'Authorization' => 'Token ' . $token[0],
         ])->get('https://demo.campay.net/api/transaction/' . $reference . '/', [
             'Authorization' => 'Token ' . $token[0],
         ]);
-        $request->session()->forget('points');
         $request->session()->forget('token');
 
         if ($response->status() === 401) {
-            return redirect('/account')->with('message', "we have many problems please try later");
+            return redirect('/account/transaction')->with('message', "we have many problems please try later");
         }
 
+        //save transaction
+        $transaction  = new Transaction();
+        $transaction->status = $response->json()['status'];
+        $transaction->price = (int)$amount;
+        $transaction->points = $points[0];
+        $transaction->user_id = Auth::id();
+        $transaction->save();
+
+        $user = User::where('id', Auth::id())->first();
         if ($response->json()['status'] === "SUCCESSFUL") {
-            $user = User::where('id', Auth::id())->first();
             $user->wallet->balance = $user->wallet->balance + $points[0];
             $user->wallet->save();
+<<<<<<< HEAD
             return redirect('/account')->with('message', 'purchase of points successful !! your balance is ' . $user->wallet->balance . ' points');
+=======
+            $request->session()->forget('points');
+            return redirect('account/transaction')->with('message', 'purchase of points successful !! your balance is '.$user->wallet->balance.' points');
+>>>>>>> 0c50fb2ed6549914fec7ac2d92980091d511885f
         } elseif ($response->json()['status'] === "FAILED") {
-            return redirect('/account')->with('message', "check the amount of your balance  and try again");
+            return redirect('account/transaction')->with('message', "check the amount of your balance  and try again");
         }
+    }
+    public function transaction()
+    {
+       
+        $balance  = Auth::user()->wallet->balance;
+        $transactions = Transaction::where('user_id', Auth::id())->get();
+        return view('account/transactions', [
+            'balance' => $balance,
+            'transactions' => $transactions
+        ]);
     }
 }
