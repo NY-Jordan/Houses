@@ -73,7 +73,7 @@
                                         </div>
                                         <input class="form-control" id="email"
                                             value="" name="email"
-                                            placeholder="example@company.com" type="text" aria-label="email address">
+                                            placeholder="Enter your email" type="text" aria-label="email address">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -85,7 +85,7 @@
                                                         class="fas fa-unlock-alt"></span></span>
                                             </div>
                                             <input class="form-control" id="password" name="password"
-                                                placeholder="Password" value="" type="password"
+                                                placeholder="Enter your password" value="" type="password"
                                                 aria-label="Password" required="">
                                         </div>
                                     </div>
@@ -102,20 +102,6 @@
                                 </div>
                                 <button type="submit" class="btn btn-block btn-secondary">Sign in</button>
                             </form>
-                            <div class="mt-3 mb-4 text-center">
-                                <span class="font-weight-normal">or login with</span>
-                            </div>
-                            <div class="btn-wrapper my-4 text-center">
-                                <button class="btn btn-icon-only btn-pill btn-outline-light text-facebook mr-2"
-                                    type="button" aria-label="facebook button" title="facebook button"><span
-                                        aria-hidden="true" class="fab fa-facebook-f"></span></button>
-                                <button class="btn btn-icon-only btn-pill btn-outline-light text-twitter mr-2"
-                                    type="button" aria-label="twitter button" title="twitter button"><span
-                                        aria-hidden="true" class="fab fa-google"></span></button>
-                                <button class="btn btn-icon-only btn-pill btn-outline-light text-facebook" type="button"
-                                    aria-label="github button" title="github button"><span aria-hidden="true"
-                                        class="fab fa-apple"></span></button>
-                            </div>
                             <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
                                 <span class="font-weight-normal">Not registered? <a href="{{  route('register') }}"
                                         class="font-weight-bold">Create account</a></span>

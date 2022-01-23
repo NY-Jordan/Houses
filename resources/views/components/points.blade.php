@@ -18,7 +18,7 @@
                     </div>
                     <div class="row mt-50  mb-2">
                         <div class="col-4"></div>
-                        <div class="col-5" style="font-size: 20px">Get Any Points</div>
+                        <div class="col-5" style="font-size: 20px">Buy Points</div>
                         <div class="col-3"></div>
                     </div>
                     <div>
@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    to get seller's phone you need points
+                    <a href="#">Learn more</a>
                 </div>
             </div>
         </div>

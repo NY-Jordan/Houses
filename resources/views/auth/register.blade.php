@@ -7,26 +7,20 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
     <meta name="title" content="Spaces - My Account" />
     <meta name="author" content="Themesberg" />
-    <meta name="description"
-        content="Premium Directory Listing Bootstrap 4 Template featuring 37 hand-crafted pages, a dashboard an Mapbox integration. Spaces also comes with a complete UI Kit featuring over 700 components by Themesberg." />
-    <meta name="keywords"
-        content="bootstrap, bootstrap 4 template, directory listing bootstrap, bootstrap 4 listing, bootstrap listing, bootstrap 4 directory listing template, vector map, leaflet js template, mapbox theme, mapbox template, dashboard, themesberg, user dashboard bootstrap, dashboard bootstrap, ui kit, bootstrap ui kit, premium bootstrap theme" />
+    <meta name="description" content="Premium Directory Listing Bootstrap 4 Template featuring 37 hand-crafted pages, a dashboard an Mapbox integration. Spaces also comes with a complete UI Kit featuring over 700 components by Themesberg." />
+    <meta name="keywords" content="bootstrap, bootstrap 4 template, directory listing bootstrap, bootstrap 4 listing, bootstrap listing, bootstrap 4 directory listing template, vector map, leaflet js template, mapbox theme, mapbox template, dashboard, themesberg, user dashboard bootstrap, dashboard bootstrap, ui kit, bootstrap ui kit, premium bootstrap theme" />
 
     <link rel="canonical" href="https://themesberg.com/product/bootstrap/spaces-bootstrap-directory-listing-template" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://demo.themesberg.com/pixel-pro" />
     <meta property="og:title" content="Spaces - My Account" />
-    <meta property="og:description"
-        content="Premium Directory Listing Bootstrap 4 Template featuring 37 hand-crafted pages, a dashboard an Mapbox integration. Spaces also comes with a complete UI Kit featuring over 700 components by Themesberg." />
-    <meta property="og:image"
-        content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/spaces/thumbnail.jpg" />
+    <meta property="og:description" content="Premium Directory Listing Bootstrap 4 Template featuring 37 hand-crafted pages, a dashboard an Mapbox integration. Spaces also comes with a complete UI Kit featuring over 700 components by Themesberg." />
+    <meta property="og:image" content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/spaces/thumbnail.jpg" />
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://demo.themesberg.com/pixel-pro" />
     <meta property="twitter:title" content="Spaces - My Account" />
-    <meta property="twitter:description"
-        content="Premium Directory Listing Bootstrap 4 Template featuring 37 hand-crafted pages, a dashboard an Mapbox integration. Spaces also comes with a complete UI Kit featuring over 700 components by Themesberg." />
-    <meta property="twitter:image"
-        content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/spaces/thumbnail.jpg" />
+    <meta property="twitter:description" content="Premium Directory Listing Bootstrap 4 Template featuring 37 hand-crafted pages, a dashboard an Mapbox integration. Spaces also comes with a complete UI Kit featuring over 700 components by Themesberg." />
+    <meta property="twitter:image" content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/spaces/thumbnail.jpg" />
     <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('assets/img/favicon/apple-touch-icon.png') }}" />
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/img/favicon/favicon-32x32.png') }}" />
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/img/favicon/favicon-16x16.png') }}" />
@@ -34,8 +28,7 @@
     <link rel="mask-icon" href="{{ asset('assets/img/favicon/safari-pinned-tab.svg') }}" color="#ffffff" />
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="theme-color" content="#ffffff" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link type="text/css" href="{{ asset('assets/css/leaflet.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('assets/css/jquery.fancybox.min.css') }}" />
     <link rel="stylesheet" href="  {{ asset('assets/css/jqvmap.min.css') }}" />
@@ -57,18 +50,16 @@
                     <div class="col-12 d-flex align-items-center justify-content-center">
                         <div class="signin-inner mt-3 mt-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                             @if ($errors->any())
-                                @foreach ($errors->all() as $error)
-                                    <div class="alert alert-danger ">{{ $error }}</div>
-                                @endforeach
+                            @foreach ($errors->all() as $error)
+                            <div class="alert alert-danger ">{{ $error }}</div>
+                            @endforeach
                             @endif
                             <form action="{{ route('register') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
                                     <label for="name">Name</label>
                                     <div class="input-group mb-4">
-                                        <input class="form-control" id="name"
-                                            value="{{ old('name') }}" name="name"
-                                            placeholder="Your Name" type="text" aria-label="email address">
+                                        <input class="form-control" id="name" value="{{ old('name') }}" name="name" placeholder="Your Name" type="text" aria-label="email address">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -79,9 +70,7 @@
                                                 </span>
                                             </span>
                                         </div>
-                                        <input class="form-control" id="email"
-                                            value="{{ old('email') }}" name="email"
-                                            placeholder="example@company.com" type="email" aria-label="email address">
+                                        <input class="form-control" id="email" value="{{ old('email') }}" name="email" placeholder="Enter your email" type="email" aria-label="email address">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -89,47 +78,26 @@
                                         <label for="password">Password</label>
                                         <div class="input-group mb-4">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text"><span
-                                                        class="fas fa-unlock-alt"></span></span>
+                                                <span class="input-group-text"><span class="fas fa-unlock-alt"></span></span>
                                             </div>
-                                            <input class="form-control" id="password" name="password"
-                                                placeholder="Password" value="{{ __('password') }} " type="password"
-                                                aria-label="Password" required="">
+                                            <input class="form-control" id="password" name="password" placeholder="{{ __('password') }} " type="password" aria-label="Enter your password" required="">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="password">Confirm Password</label>
                                         <div class="input-group mb-4">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text"><span
-                                                        class="fas fa-unlock-alt"></span></span>
+                                                <span class="input-group-text"><span class="fas fa-unlock-alt"></span></span>
                                             </div>
-                                            <input class="form-control" id="password" name="password_confirmation"
-                                                placeholder="Password" value=" {{ __('Confirm Password') }} " type="password"
-                                                aria-label="Password" required="">
+                                            <input class="form-control" id="password" name="password_confirmation" placeholder=" {{ __('Confirm Password') }} " type="password" aria-label="Password" required="">
                                         </div>
                                     </div>
-                                    
+
                                 </div>
                                 <button type="submit" class="btn btn-block btn-secondary">Sign up</button>
                             </form>
-                            <div class="mt-3 mb-4 text-center">
-                                <span class="font-weight-normal">or login with</span>
-                            </div>
-                            <div class="btn-wrapper my-4 text-center">
-                                <button class="btn btn-icon-only btn-pill btn-outline-light text-facebook mr-2"
-                                    type="button" aria-label="facebook button" title="facebook button"><span
-                                        aria-hidden="true" class="fab fa-facebook-f"></span></button>
-                                <button class="btn btn-icon-only btn-pill btn-outline-light text-twitter mr-2"
-                                    type="button" aria-label="twitter button" title="twitter button"><span
-                                        aria-hidden="true" class="fab fa-google"></span></button>
-                                <button class="btn btn-icon-only btn-pill btn-outline-light text-facebook" type="button"
-                                    aria-label="github button" title="github button"><span aria-hidden="true"
-                                        class="fab fa-apple"></span></button>
-                            </div>
                             <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
-                                <span class="font-weight-normal"> registered? <a href="{{  route('login')  }}"
-                                        class="font-weight-bold">Sign in</a></span>
+                                <span class="font-weight-normal"> registered? <a href="{{  route('login')  }}" class="font-weight-bold">Sign in</a></span>
                             </div>
                         </div>
                     </div>

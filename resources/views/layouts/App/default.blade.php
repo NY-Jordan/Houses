@@ -1,12 +1,13 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <!-- Required meta tags -->
-      <!-- Required meta tags -->
+    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-      <meta name="keywords" content=""/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="keywords" content="" />
     <meta name="description" content="des conseils pédiatriques gratuits pour garder votre bébé en bonne santé à la maison">
     <meta name="author" content="CSListed | Real Estate">
     <meta name="robots" content="index,follow" />
@@ -21,27 +22,30 @@
     <link href="{{ asset('./css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('./css/tiny-slider.css') }}" rel="stylesheet">
     <link href="{{ asset('./css/aos.css') }}" rel="stylesheet">
-    
+
     <title>CSListed Real Estate</title>
     <script src="https://unpkg.com/feather-icons"></script>
-     <link rel="shortcut icon" type="image/x-icon" href=""/>
-    <meta itemprop="name" content="des conseils pédiatriques gratuits pour garder votre bébé en bonne santé à la maison"/>
-    <meta itemprop="url" content=""/>
-    <meta itemprop="description" content="des conseils pédiatriques gratuits pour garder votre bébé en bonne santé à la maison"/>
+    <link rel="shortcut icon" type="image/x-icon" href="" />
+    <meta itemprop="name" content="des conseils pédiatriques gratuits pour garder votre bébé en bonne santé à la maison" />
+    <meta itemprop="url" content="" />
+    <meta itemprop="description" content="des conseils pédiatriques gratuits pour garder votre bébé en bonne santé à la maison" />
 
-    <meta name="twitter:title" content="Fanalex Baby Care"/>
-    <meta name="twitter:image" content=""/>
-    <meta name="twitter:url" content=""/>
-    <meta name="twitter:card" content="website"/>
-    <meta name="twitter:description" content="des conseils pédiatriques gratuits pour garder votre bébé en bonne santé à la maison"/>
+    <meta name="twitter:title" content="Fanalex Baby Care" />
+    <meta name="twitter:image" content="" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:card" content="website" />
+    <meta name="twitter:description" content="des conseils pédiatriques gratuits pour garder votre bébé en bonne santé à la maison" />
     <meta name="description" content="des conseils pédiatriques gratuits pour garder votre bébé en bonne santé à la maison" />
 
-  <body>
-<div class="page-header" style="background-image:url('./img/headerimage.jpg');">
-    @include('layouts/App/navbar')
-        @yield('content')
-</div>
-    
+<body>
+    <div class="page-header">
+        @include('layouts/App/navbar')
+        <div style="padding-top: 53px;">
+            @yield('content')
+
+        </div>
+    </div>
+
     <footer class="pt-4 pb-3 bg-dark text-white">
         <div class="container">
             <div class="row">
