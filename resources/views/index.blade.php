@@ -61,9 +61,7 @@
                                     <div class="card-body row">
                                         <div class="col">
                                             <p class="text-uppercase fw-bolder">{{ $post->name }}</p>
-                                            <p class="text-muted"><span
-                                                    class="fw-bolder">{{ $post->rent_per_month }}</span>FCFA /
-                                                Month</p>
+                                            <p class="text-muted"><span class="fw-bolder">{{ $post->rent_per_month }}</span> FCFA/Month</p>
                                         </div>
                                         <div class="col">
                                             <p class="text-end"><span

@@ -109,8 +109,8 @@
                                             id="text-input">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="text-input" class="form-label">Address</label>
-                                        <input class="form-control" value="" name="Adress" type="text"
+                                        <label for="text-input" class="form-label">Email</label>
+                                        <input class="form-control" value="" name="email" type="email"
                                             id="text-input">
                                     </div>
                                     <div class="mb-3">
