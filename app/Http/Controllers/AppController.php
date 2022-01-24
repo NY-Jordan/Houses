@@ -106,11 +106,6 @@ class AppController extends Controller
     }
     public function search(Request $request)
     {
-        $request->validate([
-            'location' => 'required',
-            'category_id' => 'required',
-            'budget' => 'required'
-        ]);
 
         $location = $request->location;
         $cities  = Cities::getAll();
@@ -119,7 +114,9 @@ class AppController extends Controller
         if ($category_id > count($categories) || $category_id < 0) {
             abort('404');
         }
+        
         $budget = array_map('intval', explode('-', $request->input('budget')));
+        
         $search  = Post::where('category_id', $category_id)->where('location', $location)->where('rent_per_month', '>=', $budget[0])->where('rent_per_month', '<', $budget[1] ?? 10000000000000000);
         $posts = $this->paginate($search, 8);
         $categry = Categories::where('id', $category_id)->first();

@@ -48,7 +48,17 @@
 
                 </ul>
 
-
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        {{ session()->get('success') }}
+                    </div>
+                @endif
+                @if (session()->has('error'))
+                    <div class="alert alert-danger">
+                        {{ session()->get('error') . ' you can get it' }} <button class="btn btn-link"
+                            id="points_button" data-toggle="modal" data-target="#points"> here</button>
+                    </div>
+                @endif
 
                 <!-- end of product carousel -->
             </div>
@@ -68,9 +78,10 @@
                 <p>
                     @if ($show_phone)
                         @if ($show_phone->statut)
-                            <span style="font-size: 30px" >{{ $post->phonenumber }}</span>
+                            <span style="font-size: 30px">{{ $post->phonenumber }}</span>
                         @else
-                            <button id="getcontact" class="btn btn-primary"><i data-feather="phone"></i> Get Contact to
+                            <button data-toggle="modal" data-target="#confirm" id="getcontact" class="btn btn-primary"><i
+                                    data-feather="phone"></i> Get Contact to
                                 visit</button>
                         @endif
                     @else
@@ -86,17 +97,6 @@
                 </p>
             </div>
         </div>
-        @if (session()->has('success'))
-            <div class="alert alert-success">
-                {{ session()->get('success') }} 
-            </div>
-        @endif
-        @if (session()->has('error'))
-            <div class="alert alert-danger">
-                {{ session()->get('error') . ' you can get it' }} <button class="btn btn-link" id="points_button"
-                    data-toggle="modal" data-target="#points"> here</button>
-            </div>
-        @endif
     </div>
 
     <div class="modal fade" id="confirm" tabindex="-1">
@@ -120,7 +120,7 @@
                         </div>
                         <div class="col-4"></div>
                         <div class="col-4" style="margin-bottom: 10px">
-                            <button id="closeconfirm" type="button" class="btn btn-secondary">Cancel</button>
+                            <button id="close" type="button" class="btn btn-secondary">Cancel</button>
                         </div>
                         <a href="#">Lean more</a>
                     </div>

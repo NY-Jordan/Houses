@@ -23,6 +23,7 @@ class CreatePostsTable extends Migration
             $table->string('email');
             $table->string('location');
             $table->integer('phonenumber');
+            $table->string('status')->default('not approved');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->foreignId('city_id')->constrained()->onDelete('cascade');

@@ -44,6 +44,9 @@
                             <button class="btn btn-link nav-link" type="submit"> Sign out </button>
                         </form>
                     </li>
+                    @if (Auth::user()->status === "Admin")
+                       <a href="{{ route('admin.index') }}"><li class="nav-item" style="color: aliceblue">Admin</li></a> 
+                    @endif
                 </ul>
             </div>
             <div class="d-flex align-items-center">

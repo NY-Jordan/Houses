@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AppController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AccountController;
 
 /*
@@ -32,8 +33,23 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/getcontact/{id}', [AccountController::class, 'getcontact'])->name('getcontact');
     Route::get('/payment/{montant}/{points}', [AccountController::class, 'payment'])->name('payment');
     Route::get('/payement/status', [AccountController::class, 'payment_status']);
-});
 
+
+    //admin
+    Route::get('/account/admin', [AdminController::class, 'index'])->name('admin.index');
+    /* Route::get('acount/admin/add-user', [AdminController::class, 'add_user'])->name('admin.add.user');  */
+    Route::get('acount/admin/delete/{id}', [AdminController::class, 'delete_user'])->name('admin.delete.user'); 
+    Route::get('acount/admin/post', [AdminController::class, 'posts'])->name('admin.posts');
+    Route::get('acount/admin/delete/{id}', [AdminController::class, 'delete_post'])->name('admin.delete.post'); 
+
+    Route::get('account/disapproved/{id}', [AdminController::class, 'disapproved'])->name('admin.disapproved.post');
+    Route::get('account/approved/{id}', [AdminController::class, 'approved'])->name('admin.approved.post'); //
+
+    Route::get('account/approved/{id}', [AdminController::class, 'block'])->name('admin.block.user');
+    Route::get('account/approved/{id}', [AdminController::class, 'unblock'])->name('admin.unblock.user');
+
+
+});
 
 Route::get('/property/{id}/details', [AccountController::class, 'details'])->name('property.details');
 Route::get('/result', [AppController::class, 'result'])->name('result');
