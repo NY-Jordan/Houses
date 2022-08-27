@@ -22,8 +22,11 @@
     <link href="{{ asset('./css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('./css/tiny-slider.css') }}" rel="stylesheet">
     <link href="{{ asset('./css/aos.css') }}" rel="stylesheet">
-
-    <title>CSListed Real Estate</title>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyDotWc44KY8Qz9acyhv4e79Z9ik_5FnM4s"></script>
+{{--     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDotWc44KY8Qz9acyhv4e79Z9ik_5FnM4s&callback=initAutocomplete&libraries=places&v=weekly"defer></script>
+ --}}
+    <link rel="stylesheet" href="{{ asset('./css/loader.css') }}">
+    <title>SListed Real Estate</title>
     <script src="https://unpkg.com/feather-icons"></script>
     <link rel="shortcut icon" type="image/x-icon" href="" />
     <meta itemprop="name" content="des conseils pédiatriques gratuits pour garder votre bébé en bonne santé à la maison" />
@@ -40,6 +43,7 @@
 <body>
     <div class="page-header">
         @include('layouts/App/navbar')
+        
         <div style="padding-top: 53px;">
             @yield('content')
 
@@ -89,9 +93,13 @@
     <script src="{{ asset('./js/popper.min.js') }}"></script>
     <script src=" {{ asset('./js/jquery-3.3.1.slim.min.js') }}"></script>
     <script src=" {{ asset('./js/bootstrap.min.js') }}"></script>
+    <script src=" {{ asset('./js/jquery.js') }}"></script>
     <script src=" {{ asset('./js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('./js/aos.js') }}"></script>
-    <script src="{{ asset('payement/payement.js') }}"></script>
+    
+    <script src="{{ asset('appJs/payement.js') }}"></script>
+    <script src="{{ asset('appJs/search.js') }}"></script>
+   
     <script>
         $(document).ready(function() {
             $('.owl-carousel').owlCarousel();
@@ -103,6 +111,24 @@
     <script>
         AOS.init();
     </script>
+    
+    <script>
+        var searchInput = 'location';
+         
+        $(document).ready(function () {
+         var autocomplete;
+         autocomplete = new google.maps.places.Autocomplete((document.getElementById(searchInput)), {
+          types: ['geocode'],
+          /*componentRestrictions: {
+           country: "USA"
+          }*/
+         });
+          
+         google.maps.event.addListener(autocomplete, 'place_changed', function () {
+          var near_place = autocomplete.getPlace();
+         });
+        });
+        </script>
 </body>
 
 </html>

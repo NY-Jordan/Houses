@@ -56,6 +56,7 @@ class AccountController extends Controller
             'inquiries' => $inquiries,
             'times' => $times,
             'categories' => $number_of_category,
+            
 
 
         ]);
@@ -204,7 +205,7 @@ class AccountController extends Controller
                 $show_phone->post_id = $post->id;
                 $show_phone->statut = true;
                 $show_phone->save();
-                return \redirect("/property/{$post->id}/details")->with('message', 'Your ad will be put online after approval by the administrators');
+                return \redirect("/account/listed")->with('message', 'Your ad will be put online after approval by the administrators');
             } catch (\Throwable $errors) {
                 dd($errors);
             }
@@ -218,31 +219,36 @@ class AccountController extends Controller
         if (!$post) {
             abort('404');
         }
-        $show_phone = Show_phone::where('user_id', Auth::id())->where('post_id', $id)->first();
-        $imagesPost = Image::where('post_id', $post->id)->get();
-        if (Auth::check()) {
-            $name = Auth::user()->name;
-            $history = History::where('user_id', Auth::user()->id)->where('post_id', $id)->get();
-            if ($history->isEmpty()) {
-                $history_user = new History();
-                $history_user->user_id  =  Auth::user()->id;
-                $history_user->post_id = $id;
-                $history_user->occurence = 1;
-                $history_user->save();
-            } else {
-                foreach ($history as $item) {
-                    if ($item->post_id === (int)$id) {
-                        $item->occurence = $item->occurence + 1;
-                        $item->save();
+        if (!($post->status === 'not approved')) {
+            $show_phone = Show_phone::where('user_id', Auth::id())->where('post_id', $id)->first();
+            $imagesPost = Image::where('post_id', $post->id)->get();
+            if (Auth::check()) {
+                $name = Auth::user()->name;
+                $history = History::where('user_id', Auth::user()->id)->where('post_id', $id)->get();
+                if ($history->isEmpty()) {
+                    $history_user = new History();
+                    $history_user->user_id  =  Auth::user()->id;
+                    $history_user->post_id = $id;
+                    $history_user->occurence = 1;
+                    $history_user->save();
+                } else {
+                    foreach ($history as $item) {
+                        if ($item->post_id === (int)$id) {
+                            $item->occurence = $item->occurence + 1;
+                            $item->save();
+                        }
                     }
                 }
             }
+            return \view('account/details', [
+                'post' => $post,
+                'imagesPost' => $imagesPost,
+                'show_phone' => $show_phone
+            ]);
+        } else {
+            abort('404');
         }
-        return \view('account/details', [
-            'post' => $post,
-            'imagesPost' => $imagesPost,
-            'show_phone' => $show_phone
-        ]);
+        
     }
 
     public function getcontact($id)
@@ -299,9 +305,11 @@ class AccountController extends Controller
         $KeyWord = $request->KeyWord;
         $result = Post::where('name', 'like', "%$KeyWord%");
         $posts  = $this->paginate($result, 6);
+
         return view('account/search', [
             'posts' => $posts,
             'KeyWord' => $KeyWord,
+            'request' => $request
         ]);
     }
     public function delete($id)

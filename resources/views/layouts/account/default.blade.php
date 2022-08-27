@@ -122,6 +122,9 @@
         showArea: true
     });
 </script>
+<script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAolRXhYydfSoaN9iT-DbNEIIiUDwyQmck&libraries=places&callback=initMap">
+</script>
 </body>
 
 </html>

@@ -2,14 +2,14 @@
     <!--navbar -->
     <nav class="navbar navbar-expand-lg navbar-transparent navbar-dark navbar-theme-primary">
         <div class="container position-relative">
-            <a class="navbar-brand mr-lg-3" href="{{ route('account') }}">
+            <a class="navbar-brand mr-lg-3" href="{{ route('index') }}">
                 <img class="navbar-brand-dark" src="{{ asset('img/logo-light.png') }}" alt="menuimage">
             </a>
             <div class="navbar-collapse collapse" id="navbar-default-primary">
                 <div class="navbar-collapse-header">
                     <div class="row">
                         <div class="col-6 collapse-brand">
-                            <a href="{{ route('account') }}">
+                            <a href="{{ route('index') }}">
                                 <img src="{{ asset('img/logo-light.png') }}" alt="menuimage">
                             </a>
                         </div>
@@ -21,7 +21,9 @@
                     </div>
                 </div>
                 <ul class="navbar-nav ml-auto navbar-nav-hover align-items-lg-center">
+                    <a href="{{ route('index') }}"><li class="nav-item" style="color: aliceblue">Home</li></a> 
                     <li class="nav-item dropdown">
+
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                             Menu
@@ -37,6 +39,8 @@
                             <li><a class="dropdown-item" href="{{ route('account.profile') }}">Profile</a></li>
                         </ul>
                     </li>
+                    <a href="#" style="margin-right: 10px;"><li class="nav-item" style="color: aliceblue">About</li></a> 
+                    <a href="#"><li class="nav-item" style="color: aliceblue">Help</li></a> 
                     @include('../../components/points')
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="post">

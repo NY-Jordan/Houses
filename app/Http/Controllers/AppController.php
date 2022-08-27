@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AppController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $categories  = Categories::getAll();
         $posts = Post::where('status', 'approved')->take(8)->get();
@@ -18,25 +18,39 @@ class AppController extends Controller
         return view('index',[
             'categories' => $categories,
             'posts' => $posts,
-            'cities' => $cities
+            'cities' => $cities,
+            'request' =>  $request
         ]);
     }
-    public function by_category($id)
+    public function by_category($id, Request $request)
     {
-        $cities  = Cities::getAll();
-        $categories = Categories::getAll();
-        if ($id > count($categories) || $id < 0) {
-            abort('404');
+        if ($request->show === 'full_time') {
+            $res = Post::where('category_id', $request->id);
+            $posts = $this->paginate($res, 6);
+           $response   = '';
+           foreach ($posts as $key => $value) {
+                $response  = $response.Post::load_post($value);
+           }
+           return [
+            'response' => $response
+           ];
+        } else {
+            $cities  = Cities::getAll();
+            $categories = Categories::getAll();
+            if ($id > count($categories) || $id < 0) {
+                abort('404');
+            }
+            $res = Post::where('category_id', $id);
+            $posts = $this->paginate($res, 6);
+            $category = Categories::where('id', $id)->first();
+            return view('by_category', [
+                'posts' => $posts,
+                'cities' => $cities,
+                'cate' => $category,
+                'categories' => $categories,
+                'request' => $request
+            ]);
         }
-        $res = Post::where('category_id', $id);
-        $posts = $this->paginate($res, 6);
-        $category = Categories::where('id', $id)->first();
-        return view('by_category', [
-            'posts' => $posts,
-            'cities' => $cities,
-            'cate' => $category,
-            'categories' => $categories
-        ]);
     }
 
     public function by_city(Request $request)
@@ -44,6 +58,16 @@ class AppController extends Controller
         $request->validate([
             'city' => 'required'
         ]);
+        if ($request->show === 'full_time') {
+            $res = $this->paginate(Post::where('city_id', $request->city), 8);
+            $response  = '';
+            foreach ($res as $key => $value) {
+                $response  = $response.Post::load_post($value);
+            }
+            return [
+                'response' => $response
+            ];
+        } else {
         $citiesId  = $request->city;
         $cities  = Cities::getAll();
         $resultat = [];
@@ -75,66 +99,133 @@ class AppController extends Controller
             'posts' => $posts,
             'cities' => $cities,
             'cities_search' => $cities_search,
-            'categories' => $categories
+            'categories' => $categories,
+            'request' => $request
         ]);
+
+        }
     }
 
     public function by_price(Request $request)
     {
+        
         $request->validate([
             'price' => 'required'
         ]);
-        $cities  = Cities::getAll();
-        $categories = Categories::getAll();
-        $price = $request->price;
-        $res = Post::where('rent_per_month', '<=', $price);
-        $posts = $this->paginate($res, 8);
-        return view('by_price', [
-            'posts' => $posts,
-            'cities' => $cities,
-            'price' => $price,
-            'categories' => $categories
-        ]);
+        if ($request->show === 'full_time') {
+            $cities  = Cities::getAll();
+            $categories = Categories::getAll();
+            $price = (int)$request->price;
+            $res = $this->paginate(Post::where('rent_per_month', '<=', $price), 8);
+            $response = "";
+            foreach ($res as $key => $value) {
+                $response  = $response. Post::load_post($value);
+            }
+            return [
+                'response' => $response
+            ];
+        } else {
+            
+           
+            $cities  = Cities::getAll();
+            $categories = Categories::getAll();
+            $price = $request->price;
+            $res = Post::where('rent_per_month', '<=', $price);
+            $posts = $this->paginate($res, 8);
+            return view('by_price', [
+                'posts' => $posts,
+                'cities' => $cities,
+                'price' => $price,
+                'categories' => $categories,
+                'request' => $request
+            ]);  
+        }
+       
     }
 
-    public function result()
+    public function result(Request $request)
     {
         $categories  = Categories::getAll();
         return view('result', [
             'categories' => $categories,
+            'request' => $request
         ]);
     }
     public function search(Request $request)
     {
-        $request->validate([
-            'location' => 'required',
-            'category_id' => 'required',
-            'budget' => 'required',
-        ]);
+        
         $location = $request->location;
         $cities  = Cities::getAll();
         $categories  = Categories::getAll();
         $category_id = (int)$request->input('category_id');
+        $search[] = $request->all();
+       $results = Post::all();
         if ($category_id > count($categories) || $category_id < 0) {
             abort('404');
         }
         
         $budget = array_map('intval', explode('-', $request->input('budget')));
-        
-        $search  = Post::where('category_id', $category_id)->where('location', $location)->where('rent_per_month', '>=', $budget[0])->where('rent_per_month', '<', $budget[1] ?? 10000000000000000);
+        $categry = Categories::where('id', $category_id)->first();
+        $search = [];
+        foreach ($request->all() as $key => $value) {
+            if (!empty($value)) {
+                $search['search'][$key] =  $value;
+            }
+            
+        }
+        if (empty($search['search'])) {
+            return redirect('/')->with('message', 'selectionner au moins un champs');
+        } elseif (count($search['search']) === 1) {
+            if(isset($search['search']['location'])){
+                $result = Post::where('location', $search['search']['location']);
+                $results = $this->paginate($result, 8);
+            } elseif (isset($search['search']['category_id'])) {
+                $result = Post::where('category_id', $search['search']['category_id']);
+                $results = $this->paginate($result, 8);
+            }elseif (isset($search['search']['rent_per_month'])) {
+                $result = Post::where('rent_per_month', '>=', $search['search']['rent_per_month']);
+                $results = $this->paginate($result, 8);
+            }
+        } elseif (count($search['search']) === 2){
+            if(isset($search['search']['location'])&&isset($search['search']['category_id'])){
+                $result = Post::where('location', $search['search']['location'])->where('category_id', $search['search']['category_id']);
+                $results = $this->paginate($result, 8);
+            } elseif (isset($search['search']['location'])&&isset($search['search']['budget'])) {
+                $result = Post::where('location', $search['search']['location'])->where('rent_per_month', '>=', $search['search']['budget']);
+                $results = $this->paginate($result, 8);
+            }elseif (isset($search['search']['budget'])&&isset($search['search']['category_id'])) {
+                $result = Post::where('rent_per_month', '>=', $search['search']['budget'])->where('category_id', $search['search']['category_id']);
+                $results = $this->paginate($result, 8);
+            }
+        } elseif (count($search['search']) === 3){
+            if(isset($search['search']['location'])&&isset($search['search']['category_id'])&&isset($search['search']['budget'])){
+                $result = Post::where('location', $search['search']['location'])->where('category_id', $search['search']['category_id'])->where('rent_per_month', '>=', $search['search']['budget']);
+                $results = $this->paginate($result, 8);
+            }
+        }
+
+
+
+        /* if (!empty($request->category_id)) {
+            $bycategory = Post::where('category_id', $category_id);
+        } 
         $posts = $this->paginate($search, 8);
         $categry = Categories::where('id', $category_id)->first();
+        */
         return view('result', [
-            'posts' => $posts,
+            'posts' => $results,
             'cities' => $cities,
             'categories' => $categories,
             'categry' => $categry,
-            'location' => $location
-        ]);
+            'location' => $location,
+            'request' => $request
+        ]); 
     }
     public function paginate($request, int $bypage)
     {
         return $request->where('status', 'approved')->paginate($bypage);
     }
+
+    
 
 }

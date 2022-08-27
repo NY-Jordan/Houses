@@ -33,14 +33,14 @@
             @endif
             <div class="row">
                 <!-- sidebar -->
-                @include('components/sidebar')
+                @include('components/sidebar2')
                 <!-- sidebar -->
                 <div class="col-md-10">
                     <div class="row mb-5">
                         <div class="col-md-6">
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" id="load_post">
                         @if (!empty($posts[0]))
                             @foreach ($posts as $post)
                                 <div class="col-md-3">

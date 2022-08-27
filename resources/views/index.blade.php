@@ -1,6 +1,6 @@
-@extends('layouts/App/default')
+@extends('layouts/App/defaults')
 @section('content')
-    <div style="background-image:url('./img/headerimage.jpg');">
+    <div style="background-image:url('./img/headerimage.jpg'); background-repeat:no-repeat; background-size: cover" >
         <div class="container py-5">
             <div class="row justify-content-center">
                 <div class="col-md-8">

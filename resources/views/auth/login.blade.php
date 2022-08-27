@@ -40,6 +40,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/jquery.fancybox.min.css') }}" />
     <link rel="stylesheet" href="  {{ asset('assets/css/jqvmap.min.css') }}" />
     <link type="text/css" href="{{ asset('assets/css/spaces.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 </head>
 
 <body style="background-color:#630d82;">
@@ -55,7 +56,8 @@
                         </div>
                     </div>
                     <div class="col-12 d-flex align-items-center justify-content-center">
-                        <div class="signin-inner mt-3 mt-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+                        <div
+                            class="signin-inner mt-3 mt-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                             @if ($errors->any())
                                 @foreach ($errors->all() as $error)
                                     <div class="alert alert-danger ">{{ $error }}</div>
@@ -71,8 +73,7 @@
                                                 </span>
                                             </span>
                                         </div>
-                                        <input class="form-control" id="email"
-                                            value="" name="email"
+                                        <input class="form-control" id="email" value="" name="email"
                                             placeholder="Enter your email" type="text" aria-label="email address">
                                     </div>
                                 </div>
@@ -84,14 +85,26 @@
                                                 <span class="input-group-text"><span
                                                         class="fas fa-unlock-alt"></span></span>
                                             </div>
-                                            <input class="form-control" id="password" name="password"
-                                                placeholder="Enter your password" value="" type="password"
-                                                aria-label="Password" required="">
+                                                <input class="form-control" name="password" placeholder="Enter your password" value="" id="id_password"  type="password" aria-label="Password" required="">
+                                                <i class="fas fa-eye" id="togglePassword" style="display: flex;
+                                                align-items: center;
+                                                position: absolute;
+                                                top: 50%;
+                                                right: 20px;
+                                                transform: translateY(-50%);
+                                                width: 20px;
+                                                color: #080808;
+                                                transition: all 0.2s;"></i>
+
+                                                
+                                            
+                                            
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center mb-4">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="remember">
+                                            <input class="form-check-input" type="checkbox" value=""
+                                                id="remember">
                                             <label class="form-check-label" for="remember">Remember me</label>
                                         </div>
                                         <div>
@@ -103,7 +116,7 @@
                                 <button type="submit" class="btn btn-block btn-secondary">Sign in</button>
                             </form>
                             <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
-                                <span class="font-weight-normal">Not registered? <a href="{{  route('register') }}"
+                                <span class="font-weight-normal">Not registered? <a href="{{ route('register') }}"
                                         class="font-weight-bold">Create account</a></span>
                             </div>
                         </div>
@@ -167,6 +180,18 @@
         }, {
             low: 0,
             showArea: true
+        });
+    </script>
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#id_password');
+
+        togglePassword.addEventListener('click', function(e) {
+            // toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            // toggle the eye slash icon
+            this.classList.toggle('fa-eye-slash');
         });
     </script>
 </body>

@@ -44,5 +44,30 @@ class Post extends Model
     {
         return $this->hasOne(User::class);
     }
+    public static function load_post(Post $value)
+    {
+        return "      
+        <div class='col-md-3'>
+            <div class='card border-0'>
+            <a href='/property/$value->id/details'>
+                <img src=' Storage::url($ $value->image->path) '
+                    style='width:240px; height:200px;' class='card-img-top'>
+            </a>
+            <div class='card-body row'>
+                <div class='col'>
+                    <p class='text-uppercase fw-bolder'> $value->name </p>
+                    <p class='text-muted'><span
+                            class='fw-bolder'> $value->rent_per_month </span>FCFA /
+                        Month</p>
+                </div>
+                <div class='col'>
+                    <p class='text-end'><span
+                            class='badge bg-info'> $value->location </span></p>
+                </div>
+            </div>
+           </div>
+        </div>
+        ";
+    }
 }
 

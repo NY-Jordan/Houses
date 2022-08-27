@@ -77,7 +77,7 @@
                                 </div>
                                 <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
                                     <span class="font-weight-normal"><a href=""
-                                            class="font-weight-bold"> <button type="submit">Sign in</button> </a></span>
+                                            class="font-weight-bold"> <button type="submit">Continue</button> </a></span>
                                 </div>
                         </div>
                     </div>
